@@ -81,11 +81,21 @@ input.text-default {
     border: none;
     box-shadow: 0px 1px 3px #c3c3c3;
     line-height: 1.75em;
+    margin: 0 5px;
 }
 
 /* List */
 li {
     padding: 5px 10px;
+}
+
+textarea {
+    padding: 5px;
+    margin: 5px;
+    font-size: 14px;
+    border: none;
+    box-shadow: 0px 1px 3px #c3c3c3;
+    line-height: 1.75em;
 }
 
 /* others */
@@ -96,4 +106,10 @@ section {
 
 article {
     padding: 15px;
+}
+
+
+/* Shared classes */
+.sub-heading {
+    margin-bottom: 10px;
 }

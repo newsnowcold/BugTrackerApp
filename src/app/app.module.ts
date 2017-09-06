@@ -13,6 +13,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 
 // login
 import { loginModuleRoute, loginModuleComponents } from '../auth/module-login.module';
+import { ProjectManagementComponent } from '../project-management/project-management.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { loginModuleRoute, loginModuleComponents } from '../auth/module-login.mo
 
     // an array of login module components
     loginModuleComponents,
-    DashboardComponent
+    DashboardComponent,
+    ProjectManagementComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+#project-management {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+#project-management .project-field {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+#project-management .project-members .available {
+    margin-right: 10px;
+}
+
+#project-management .project-members .added,
+#project-management .project-members .available {
+    border: 1px solid #CCC;
+    padding: 25px;
+    min-width: 250px;
+}
