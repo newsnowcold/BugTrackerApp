@@ -14,8 +14,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     var token = (currentUser) ? currentUser.token : undefined;
     
     if (currentUser == undefined) {
-      // this.router.navigate(['/auth']);
-      // return false;
+      this.router.navigate(['/auth']);
+      return false;
     }
 
     return true;
