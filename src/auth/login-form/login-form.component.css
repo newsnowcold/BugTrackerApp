@@ -1,0 +1,17 @@
+.login-module-wrapper {
+    position: relative;
+}
+
+.login-module-wrapper .login-form {
+    max-width: 400px;
+    height: 250px;
+    padding: 20px;
+}
+
+.login-module-wrapper .login-form .f-header {
+    margin: 15px auto;
+}
+
+.login-module-wrapper .login-form input {
+    margin-top: 10px;
+}

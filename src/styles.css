@@ -1,0 +1,99 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~/assets/css/mobilereset.css';
+@import '~/assets/css/webreset.css';
+@import '~/assets/css/responsive.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+a {
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: semi-bold;
+    line-height: 1.1;
+}
+
+h1 {
+    font-size: 36px;
+    line-height: 36px;
+}
+
+h2 {
+    font-size:30px;
+    line-height: 30px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 24px;
+}
+
+h4 {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+h5 {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+h6 {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+
+/* Forms */
+.btn {
+    box-shadow: 0px 1px 3px #c3c3c3;
+    line-height: 1.75em;
+    position: relative;
+    cursor: pointer;
+}
+
+.btn.withIcon {
+    height: 46px;
+    max-height: 46px;
+    widows: 46px;
+}
+
+.btn.default:hover { 
+    background-color: #efefef;
+}
+
+.btn.default {
+    background-color: #FFF;
+}
+
+input.text-default {
+    background-image: none;
+    padding: 9px;
+    border: none;
+    box-shadow: 0px 1px 3px #c3c3c3;
+    line-height: 1.75em;
+}
+
+/* List */
+li {
+    padding: 5px 10px;
+}
+
+/* others */
+
+section {
+    padding: 30px;    
+}
+
+article {
+    padding: 15px;
+}

@@ -1,0 +1,11 @@
+<div class="login-module-wrapper"
+  layout="row" layout-align="center">
+  
+  <form flex class="login-form"
+      layout="column" layout-align="start">
+      <h2 class="f-header">Login</h2>
+      <input type="text" [(ngModel)]="username" name="username" class="form-control" placeholder="Username">
+      <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password">
+      <input type="submit" value="login" (click)="login()">
+  </form>
+</div>
