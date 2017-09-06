@@ -4,10 +4,23 @@
 
   <div layout="column">
 
-
+    <div class="project-navigation" layout="row" layout-align="start center">
+      <button class="btn default" layout="row" layout-align="space-between">
+        <i class="material-icons" title="Add new project">add_box</i>
+        Add project
+      </button>
+      
+      <select>
+        <option>Project x44</option>
+        <option>1</option>
+        <option>1</option>
+        <option>1</option>
+      </select>
+    </div>
     <!-- Default panel contents -->
-    <div layout="row" layout-align="space-between">
-      <h4>Issues under Project x44</h4>
+    <div class="project-issues">
+    <div layout="row" layout-align="space-between center">
+      <h4>Project issues</h4>
       <div>
         <button class="btn default" layout="row" layout-align="space-between">
           <i class="material-icons" title="Report bug">bug_report</i>
@@ -50,5 +63,6 @@
           </tr>
         </tbody>
     </table>
+    </div>
   </div>
 </section>
