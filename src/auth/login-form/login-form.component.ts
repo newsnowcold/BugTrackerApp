@@ -33,11 +33,13 @@ export class LoginFormComponent implements OnInit {
       headers: headers
     })
     .subscribe(
-        (result: any) => {
+        result => {
             var data = result.json();
             this.handleResult(data);
-        }
-    )
+        },
+        error => console.log(error),
+        () => console.log('done')
+    );
   }
 
   private handleResult(data: any) {

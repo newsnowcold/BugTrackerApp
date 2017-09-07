@@ -9,11 +9,13 @@ import { AuthGuard } from '../shared/auth-guard.service';
 import { MainRoutingModule } from './app.routing';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UserService } from '../shared/user.service';
+import { LoadersCssModule } from 'angular2-loaders-css';
+import { LoaderService } from '../shared/loader.service';
 
 // app modules
 
 // login
-import { loginModuleRoute, loginModuleComponents } from '../auth/module-login.module';
+import { LoginModuleRoute, LoginModuleComponents } from '../auth/module-login.module';
 import { ProjectManagementComponent } from '../project-management/project-management.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -22,7 +24,7 @@ import { HeaderComponent } from './header/header.component';
     AppComponent,
 
     // an array of login module components
-    loginModuleComponents,
+    LoginModuleComponents,
     DashboardComponent,
     ProjectManagementComponent,
     HeaderComponent
@@ -33,17 +35,19 @@ import { HeaderComponent } from './header/header.component';
     HttpModule,
     MainRoutingModule,
     // the actual login routing module
-    loginModuleRoute
+    LoginModuleRoute,
+    LoadersCssModule
   ],
   bootstrap: [ AppComponent ],
   providers: [
     {
         provide: Http,
         useFactory: httpFactory,
-        deps: [XHRBackend, RequestOptions]
+        deps: [XHRBackend, RequestOptions, LoaderService]
     },
     AuthGuard,
-    UserService
+    UserService,
+    LoaderService
 ]
 })
 export class AppModule { }

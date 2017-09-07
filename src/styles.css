@@ -4,6 +4,7 @@
 @import '~/assets/css/webreset.css';
 @import '~/assets/css/responsive.css';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '~../node_modules/loaders.css/loaders.min.css';
 
 a {
     font-weight: 400;
@@ -127,4 +128,14 @@ article {
 
 .clickable {
     cursor: pointer;
+}
+
+.loader-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+.loader .my-loader {
+    background-color: #217ebd!important;
+    z-index: 10;
 }

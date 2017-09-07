@@ -1,12 +1,9 @@
+<div class="loader-container" *ngIf="showLoader" layout="column" layout-align="center center">
+    <loaders-css  [loader]="'ball-pulse-rise'" [loaderClass]="'my-loader'">
+    </loaders-css>
+</div>
+
 <article layout="column">
-    <!--<header layout="row" layout-align="space-between">
-        <div class="brand">
-            <h1>Bug Tracking Application</h1>
-        </div>
-        <div class="menus">
-            <h3> Welcome [], <a href='#'>Logout</a></h3>
-        </div>
-    </header>-->
     <app-header></app-header>
     <router-outlet></router-outlet>
 </article>
