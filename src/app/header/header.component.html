@@ -1,0 +1,13 @@
+<header id="app-main-header" layout="row" layout-align="space-between" 
+*ngIf="currentUser">
+    <div class="brand">
+        <h2>Bug Tracking Application</h2>
+    </div>
+    <div class="menus">
+        <ol class="breadcrumb muteTxt">
+            <li>{{currentUser}}</li>
+            <li (click)="logout()" class="clickable">Logout</li>
+            <li class="clickable">Project Settings</li>
+          </ol>
+    </div>
+</header>

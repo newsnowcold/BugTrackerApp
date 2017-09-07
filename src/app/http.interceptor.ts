@@ -5,12 +5,15 @@
 
 import {Injectable} from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
-import {Observable} from "rxjs/Rx";
-import {environment} from "../environments/environment";
+import { Observable } from "rxjs/Rx";
+import { environment } from "../environments/environment";
 
 @Injectable()
 export class InterceptedHttp extends Http {
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
+
+    constructor(backend: ConnectionBackend, 
+                defaultOptions: RequestOptions) {
+        
         super(backend, defaultOptions);
     }
 
@@ -39,13 +42,20 @@ export class InterceptedHttp extends Http {
     }
 
     private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
+
+
         if (options == null) {
             options = new RequestOptions();
         }
         if (options.headers == null) {
             options.headers = new Headers();
         }
+
+        let jsonData = JSON.parse(localStorage.getItem('currentUser'));
+        let token = jsonData.token_type + ' ' + jsonData.access_token;
+
         options.headers.append('Content-Type', 'application/json');
+        options.headers.append('Authorization', token);
 
         return options;
     }

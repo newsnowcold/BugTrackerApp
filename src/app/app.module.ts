@@ -8,12 +8,14 @@ import { httpFactory } from './http.factory';
 import { AuthGuard } from '../shared/auth-guard.service';
 import { MainRoutingModule } from './app.routing';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { UserService } from '../shared/user.service';
 
 // app modules
 
 // login
 import { loginModuleRoute, loginModuleComponents } from '../auth/module-login.module';
 import { ProjectManagementComponent } from '../project-management/project-management.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ProjectManagementComponent } from '../project-management/project-manage
     // an array of login module components
     loginModuleComponents,
     DashboardComponent,
-    ProjectManagementComponent
+    ProjectManagementComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { ProjectManagementComponent } from '../project-management/project-manage
         useFactory: httpFactory,
         deps: [XHRBackend, RequestOptions]
     },
-    AuthGuard
+    AuthGuard,
+    UserService
 ]
 })
 export class AppModule { }

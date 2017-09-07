@@ -5,16 +5,16 @@
   <div layout="column">
 
     <div class="project-navigation" layout="row" layout-align="start center">
-      <button class="btn default" layout="row" layout-align="space-between">
+      <button class="btn default" layout="row" layout-align="space-between"
+        data-toggle="modal" data-target="#modal-addProject">
         <i class="material-icons" title="Add new project">add_box</i>
         Add project
       </button>
       
       <select>
-        <option>Project x44</option>
-        <option>1</option>
-        <option>1</option>
-        <option>1</option>
+        <option *ngFor='let project of projects; trackBy: index;'>
+          {{project.Name}}
+        </option>
       </select>
     </div>
     <!-- Default panel contents -->
@@ -22,7 +22,8 @@
     <div layout="row" layout-align="space-between center">
       <h4>Project issues</h4>
       <div>
-        <button class="btn default" layout="row" layout-align="space-between">
+        <button class="btn default" layout="row" layout-align="space-between"
+         data-toggle="modal" data-target="#modal-reportbug">
           <i class="material-icons" title="Report bug">bug_report</i>
           Report bug
         </button>
@@ -66,3 +67,57 @@
     </div>
   </div>
 </section>
+
+<!-- template for modal of bug reporting -->
+<div id="modal-reportbug" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Report bug</h4>
+      </div>
+      <div class="modal-body">
+        <p>Just do it!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- template for modal of adding new project -->
+<div id="modal-addProject" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add new project</h4>
+        </div>
+        <div class="modal-body">
+          <!--project title-->
+          <div layout="row" class="project-field" layout-align="space-between center">
+            <label>Project title</label>
+            <input type="text" [(ngModel)]="title" placeholder="Enter project title" class="text-default" flex="80">
+          </div>
+        
+          <!--project description [optional]-->
+          <div layout="row" class="project-field" layout-align="space-between center">
+            <label>Project title</label>
+            
+            <textarea rows="4" cols="50" [(ngModel)]="description" placeholder="Add project description [optional]" flex="80"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addProject()">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>

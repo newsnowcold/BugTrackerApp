@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Http, Headers} from "@angular/http";
+import { UserService } from '../../shared/user.service';
 import { Router } from '@angular/router';
 declare var $:any;
 // import { ApiService } from '../../shared/api.service';
@@ -15,7 +16,9 @@ export class LoginFormComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private http: Http, private router: Router) {};
+  constructor(private http: Http, 
+              private router: Router,
+              private userService: UserService) {};
 
   ngOnInit() {
   }
@@ -32,14 +35,14 @@ export class LoginFormComponent implements OnInit {
     .subscribe(
         (result: any) => {
             var data = result.json();
-            this.saveToken(data.token, this.username);
-            this.router.navigate(['']);
+            this.handleResult(data);
         }
     )
   }
 
-  private saveToken(token: string, user: string) {
-    localStorage.setItem('currentUser', JSON.stringify({ token: token, name: user }));
+  private handleResult(data: any) {
+    this.userService.saveToken(data);
+    this.router.navigate(['']);
   }
 
 
