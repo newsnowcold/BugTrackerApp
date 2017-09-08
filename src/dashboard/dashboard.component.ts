@@ -12,42 +12,86 @@ export class DashboardComponent implements OnInit {
   title: string;
   description: string;
   projects: any;
+  users: any;
+  modal: any;
 
   constructor(private http: Http,
               private router: Router) { }
 
   ngOnInit() {
-
-    this.http.get('Project')
-    .subscribe(
-        (result: any) => {
-            var data = result.json();
-            this.projects = data;
-        }
-    )
-
+    this.getProjects();
+    this.initializeModals();
+    
   }
-
   addProject() {
     this.http.post('Project/Create', {
       Name: this.title,
       Description: this.description
     })
     .subscribe(
-        (result: any) => {
+        result => {
             var data = result.json();
-            this.handleResult(data);
-        }
+            this.getProjectsHandler(data);
+        },
+        err => console.log(err),
+        () => this.done()
     )
   }
 
-  handleResult(data: any) {
+  done() {
+    $(function () {
+      // $('#modal-addProject').modal('toggle');
+    });
+  }
+
+  private getProjects() {
+    this.http.get('Project')
+            .subscribe(
+                (result: any) => {
+                    var data = result.json();
+                    this.projects = data;
+                }
+            );
+  }
+
+  private getUsers() {
+    this.http.get('User')
+            .subscribe(
+              result => {
+                var data = result.json();
+                this.getUsersHandler(data);
+              },
+              err => console.log(err),
+              () => this.done()
+            )
+  }
+
+
+  // helper methods
+  private getUsersHandler(data: any) {
+    console.log(data)
+    for (var i = 0; i < data.length; i++) {
+      data[i]['isSelected'] = false;
+    }
+
+    this.users = data;
+    console.log(this.users)
+  }
+
+  private getProjectsHandler(data: any) {
     this.title = undefined;
     this.description = undefined;
+    this.modal.project.IsProjectPhase = false;
+    this.getUsers();
+    // this.getProjects();
+  }
 
-    $(function () {
-      $('#modal-addProject').modal('toggle');
-   });
+  private initializeModals() {
+    this.modal = {
+      project: {
+        IsProjectPhase: true
+      }
+    }
   }
 
 }

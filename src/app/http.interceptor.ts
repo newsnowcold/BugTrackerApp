@@ -17,7 +17,6 @@ export class InterceptedHttp extends Http {
                 private loaderService: LoaderService) {  
         
         super(backend, defaultOptions);
-        console.log(this.loaderService)
     }
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
@@ -99,25 +98,24 @@ export class InterceptedHttp extends Http {
     }
 
     private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
+        
 
+        let jsonData = JSON.parse(localStorage.getItem('currentUser'));
+        
+        let token = '';
+        if (jsonData && jsonData.access_token) {
+            token = jsonData.token_type + ' ' + jsonData.access_token;
+        }
 
         if (options == null) {
             options = new RequestOptions();
         }
         if (options.headers == null) {
             options.headers = new Headers();
-        }
-
-        let jsonData = JSON.parse(localStorage.getItem('currentUser'));
-
-        let token = '';
-        if (jsonData && jsonData.access_token) {
-            token = jsonData.token_type + ' ' + jsonData.access_token;
+            options.headers.append('Content-Type', 'application/json');
+            options.headers.append('Authorization', token);
         }
         
-        options.headers.append('Content-Type', 'application/json');
-        options.headers.append('Authorization', token);
-
         return options;
     }
 }
