@@ -87,7 +87,7 @@ input.text-default {
 
 /* List */
 li {
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
 }
 
 textarea {
@@ -139,4 +139,9 @@ article {
 .loader .my-loader {
     background-color: #217ebd!important;
     z-index: 10;
+}
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
 }
