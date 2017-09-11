@@ -4,16 +4,17 @@ import { UserService } from '../shared/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
+  token: string;
 
   constructor(private router: Router, private userService: UserService) {
-
+    this.userService.token.subscribe((val: string) => {
+        this.token = val;
+    });
   }
 
   canActivate() {
 
-    var token = this.userService.getToken();
-
-    if (token == undefined) {
+    if (this.token == undefined) {
       this.router.navigate(['/auth']);
       return false;
     }

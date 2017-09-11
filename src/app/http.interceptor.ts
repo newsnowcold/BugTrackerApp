@@ -108,14 +108,15 @@ export class InterceptedHttp extends Http {
         }
 
         if (options == null) {
-            options = new RequestOptions();
+            options = new RequestOptions();            
         }
+
         if (options.headers == null) {
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Authorization', token);
         }
-        
+
         return options;
     }
 }

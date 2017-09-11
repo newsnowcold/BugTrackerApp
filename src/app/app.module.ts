@@ -11,6 +11,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { UserService } from '../shared/user.service';
 import { LoadersCssModule } from 'angular2-loaders-css';
 import { LoaderService } from '../shared/loader.service';
+import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
 
 // app modules
 
@@ -47,7 +48,8 @@ import { HeaderComponent } from './header/header.component';
     },
     AuthGuard,
     UserService,
-    LoaderService
+    LoaderService,
+    IssueStatusAndPriority
 ]
 })
 export class AppModule { }

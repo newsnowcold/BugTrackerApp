@@ -11,7 +11,7 @@
         Add project
       </button>
       
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="selectedProject">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
            {{ selectedProject.Name }}
         <span class="caret"></span></button>
@@ -75,6 +75,16 @@
       </div>
       <div class="modal-body">
         
+        <div layout="row" class="project-field" layout-align="start center">
+          
+          <select>
+            <option (click)="selectedPriority = priotype" *ngFor="let prioType of priorityTypes; trackBy: index;">
+              {{prioType.PriorityType1}}
+            </option>
+          </select>
+          <label *ngIf="selectedPriority">{{selectedPriority.PriorityType1}}</label>
+        </div>
+
         <!--project title-->
         <div layout="row" class="project-field" layout-align="space-between center">
           <label>Bug title</label>
@@ -136,7 +146,7 @@
                   <div class="sub-heading">Available people</div>
                   <div class="member-container" layout="column" layout-align="start start" layout-padding>
                     <ng-container *ngFor='let user of users; trackBy: index;'>
-                      <label *ngIf="!user.isSelected">
+                      <label *ngIf="!user.isSelected && !user.isCurrentUser">
                         <input [(ngModel)]="user.isSelected" type="checkbox">{{user.FirstName}}&nbsp;{{user.LastName}}
                       </label>
                     </ng-container>

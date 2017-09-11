@@ -7,15 +7,15 @@ import { LoaderService } from '../shared/loader.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showLoader: boolean = false;
+  showLoader: boolean;
 
   constructor(
       private loaderService: LoaderService) {
   }
 
   ngOnInit() {
-      this.loaderService.status.subscribe((val: boolean) => {
+      this.loaderService.status.subscribe((val: boolean) => setTimeout( () => {
           this.showLoader = val;
-      });
+      }, 0));
   }
 }

@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, IUserObserver } from '../../shared/user.service';
+import { UserService } from '../../shared/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, IUserObserver {
+export class HeaderComponent implements OnInit {
   currentUser: string;
+  token: string;
 
   constructor(private userService: UserService) { 
-    userService.subscribe(this);
+    this.userService.token.subscribe((val: string) => {
+        this.token = val;
+    });
   }
 
   ngOnInit() {
@@ -21,11 +24,4 @@ export class HeaderComponent implements OnInit, IUserObserver {
     this.userService.removeToken();
     this.currentUser = undefined;
   }
-
-  excute() {
-    this.currentUser = this.userService.getUser();
-  }
-
-  
-
 }

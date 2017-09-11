@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {Http, Headers} from "@angular/http";
+import { UserService } from '../shared/user.service';
+import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
 declare var $:any;
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -15,20 +19,34 @@ export class DashboardComponent implements OnInit {
   };
   issue: any = {
     title: undefined,
-    description: undefined
+    description: undefined,
+    priority: undefined
   };
+  
   projects: any = new Array();
   users: any = new Array();
   modal: any;
   selectedProject: any;
   issues: any = new Array();
+  currentUser: any;
+  currentUserId: number;
+  statusTypes: any;
+  priorityTypes: any;
 
   constructor(private http: Http,
-              private router: Router) { }
+              private router: Router,
+              private userService: UserService,
+              private issueStatusAndPriority: IssueStatusAndPriority) {
+
+    this.currentUser = userService.getUser();
+    this.currentUserId = userService.getUserId();
+    this.getPriorityTypes();
+    this.getStatusTypes();
+  }
 
   ngOnInit() {
     this.getProjects();
-    this.initializeModals();    
+    this.initializeModals();
   }
 
   private addProject() {
@@ -50,6 +68,7 @@ export class DashboardComponent implements OnInit {
     let tobeNewMembers = new Array();
 
     for(var i = 0; i < this.users.length; i++) {
+
       if (this.users[i].isSelected) {
         tobeNewMembers.push({
           "UserId": this.users[i].Id
@@ -69,6 +88,22 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  private getPriorityTypes() {
+    this.issueStatusAndPriority.getPriorityTypes().subscribe(
+      data => {
+        this.priorityTypes = data;
+      }
+    )
+  }
+
+  private getStatusTypes() {
+    this.issueStatusAndPriority.getPriorityTypes().subscribe(
+      data => {
+        this.statusTypes = data;
+      }
+    )
+  }
+
   private done() {
     $(function () {
       $('#modal-addProject').modal('toggle');
@@ -78,6 +113,8 @@ export class DashboardComponent implements OnInit {
   private doneAddingBug() {
     this.issue.title = undefined;
     this.issue.description = undefined;
+    this.issue.priority = undefined;
+
     $(function () {
       $('#modal-reportbug').modal('toggle');
     });
@@ -152,7 +189,7 @@ export class DashboardComponent implements OnInit {
   private getIssuesHandler(data: any) {
     this.issues = [];
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {      
       var issue = data[i];
       issue['index'] = (i + 1);
       issue.DateCreated = this.utcToLocalTime(issue.DateCreated);
@@ -164,6 +201,11 @@ export class DashboardComponent implements OnInit {
 
   private getUsersHandler(data: any) {
     for (var i = 0; i < data.length; i++) {
+      
+      if (data[i].Id == this.currentUserId) {
+        data[i]['isCurrentUser'] = true
+      };
+      
       data[i]['isSelected'] = false;
     }
 

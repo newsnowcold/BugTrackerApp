@@ -2,46 +2,38 @@
 // Imports
 import { Injectable }     from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface IUserObserver {
-    excute();
-}
-
-export interface IUserObservable {
-    subscribe(subscriber: IUserObserver);
-    unsubscribe(subscriber: IUserObserver);
-    publish();
-}
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
-export class UserService implements IUserObservable {
+export class UserService {
     
-    private _token: string;
+    public token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
+
+    //token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
     private _username: string;
+    private _userId: number;
     private _tokenType: string;
     // if you want to change the name of localStorage, check the interceptor too
     private l_storageName = 'currentUser';
-    private observers: IUserObserver[];
 
     constructor(private router: Router) {
-        this.observers = new Array();
         this.initializeToken();
     }
 
-    
+
     public getUser() {
         return this._username;
     }
 
-    public getToken() {
-        var token = undefined;
+    public getUserId() {
+        return  this._userId;
+    }
 
-        if (this._token != undefined) {
-            token = this._tokenType + ' ' + this._token
-        } 
+    private setToken(token: string) {
+        var fullToken = this._tokenType + ' ' + token;
 
-        return token;
+        this.token.next(fullToken);
     }
 
     public saveToken(data: any) {
@@ -57,28 +49,13 @@ export class UserService implements IUserObservable {
         this.router.navigate(['/auth']);
     }
 
-    public subscribe(subscriber: IUserObserver) {
-        this.observers.push(subscriber);        
-    }
-
-    public unsubscribe(subscriber: IUserObserver) {
-        this.observers = this.observers.filter((rob) => {
-            return subscriber !== rob;
-        });
-    }
-
-    public publish() {
-        this.observers.forEach((subscriber) => {
-           subscriber.excute();
-        });        
-    }
-
     // Helper functions/methods
 
     private processLoginReponse(jsonData: any) {
         this._tokenType = jsonData.token_type;
         this._username = jsonData.userName;
-        this._token = jsonData.access_token;
+        this._userId = jsonData.userId;
+        this.setToken(jsonData.access_token)
     }
 
     private initializeToken() {
@@ -88,9 +65,10 @@ export class UserService implements IUserObservable {
     }
 
     private resetVariables() {
-        this._token = undefined;
+        this.token.next(undefined);
         this._username = undefined;
         this._tokenType = undefined;
+        this._userId = undefined;
     }
 
 
