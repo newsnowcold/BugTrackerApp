@@ -178,24 +178,31 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" >
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Update Status</h4>
+            <h4 class="modal-title">Update Status [{{toUpdateBug.Title}}]</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" *ngIf="toUpdateBug">
             
-              <div layout="row" *ngIf="toUpdateBug" class="project-field bugPriority" layout-align="start center">
-                  <label>Select bug priority level</label>
-                  <select [(ngModel)]="toUpdateBug.Id">
+              <div layout="row"  class="project-field bugPriority" layout-align="start center">
+                  <label>Select updated status</label>
+                  <select [(ngModel)]="toUpdateBug.StatusId">
                     <option [ngValue]="status.Id" *ngFor="let status of statusTypes; trackBy: index;">
                       {{status.Status}}
                     </option>
                   </select>
-                </div>
+              </div>
+
+              <div layout="row" class="project-field" layout-align="space-between center">
+                <label>Resolution Summary</label>
+                
+                <textarea rows="4" cols="50" [(ngModel)]="toUpdateBug.ResolutionSummary" placeholder="Add resolution summary [optional]" flex="80"></textarea>
+              </div>
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="updateBug()">Save</button>
+            <button type="button" class="btn btn-primary" (click)="updateBugStatus()">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
       </div>

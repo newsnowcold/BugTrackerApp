@@ -47,6 +47,20 @@ export class InterceptedHttp extends Http {
                     });
     }
 
+    patch(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+        url = this.updateUrl(url);
+        return super.patch(url, body, this.getRequestOptionArgs(options))   
+                    .catch(this.onCatch)
+                    .do((res: Response) => {
+                        this.onSuccess(res);
+                    }, (error: any) => {
+                        this.onError(error);
+                    })
+                    .finally(() => {
+                        this.onEnd();
+                    });
+    }
+
     put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
         url = this.updateUrl(url);
         return super.put(url, body, this.getRequestOptionArgs(options))   

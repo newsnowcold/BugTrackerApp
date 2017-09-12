@@ -4,6 +4,7 @@ import {Http, Headers} from "@angular/http";
 import { UserService } from '../shared/user.service';
 import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
 declare var $:any;
+declare var moment:any;
 
 
 
@@ -17,10 +18,11 @@ export class DashboardComponent implements OnInit {
     title: undefined,
     description: undefined
   };
+
   issue: any = {
     title: undefined,
     description: undefined,
-    priority: undefined
+    priority: undefined,
   };
   
   projects: any = new Array();
@@ -121,6 +123,26 @@ export class DashboardComponent implements OnInit {
     this.getIssues(this.selectedProject.Id);
   }
 
+  private updateBugStatus() {
+    this.http.patch('Issue/Project/' + this.selectedProject.Id , {
+      IssueId: this.toUpdateBug.Id,
+      StatusId: this.toUpdateBug.StatusId,
+      ResolutionSummary: this.toUpdateBug.ResolutionSummary
+    })
+    .subscribe(
+        result => {
+          this.getIssues(this.selectedProject.Id);
+        },
+        err => console.log(err),
+        () => {
+          this.toUpdateBug = undefined;
+          $(function () {
+            $('#modal-updatebug').modal('hide');
+          });
+        }
+    )
+  }
+
   private openModalForUpdatingStatus(bugData) {
     $('#modal-updatebug').modal('show');
     this.toUpdateBug = bugData;
@@ -140,7 +162,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private getIssues(projectId) {
-    this.http.get('Issue/' + projectId)
+    this.http.get('Issue/Project/' + projectId)
             .subscribe(
                 result => {
                   var data = result.json();
@@ -184,7 +206,7 @@ export class DashboardComponent implements OnInit {
 
   private saveBug() {
 
-    this.http.post('Issue/' + this.selectedProject.Id, {
+    this.http.post('Issue/Project/' + this.selectedProject.Id, {
       Title: this.issue.title,
       Description: this.issue.description,
       PriorityId: this.selectedPriorityType.Id
@@ -203,8 +225,13 @@ export class DashboardComponent implements OnInit {
   private utcToLocalTime(timeString) {
     if (!timeString) return;
 
-    var time = new Date(timeString.replace('T', ' '))
-    return time.toLocaleDateString();
+    var utcDate = new Date(timeString.replace('T', ' ')),
+        offset = new Date().getTimezoneOffset(),
+        timeZoneDiff = offset + utcDate.getTimezoneOffset();
+    
+    var localTime = new Date(utcDate.getTime() + (timeZoneDiff * 60 * 1000));
+
+    return moment(localTime).format('MM/DD/YYYY h:mm a');
   }
 
   private getIssuesHandler(data: any) {
@@ -215,7 +242,7 @@ export class DashboardComponent implements OnInit {
       issue['index'] = (i + 1);
       issue.DateCreated = this.utcToLocalTime(issue.DateCreated);
       issue.DateClosed = this.utcToLocalTime(issue.DateClosed);
-
+      issue.LastUpdateDate = this.utcToLocalTime(issue.LastUpdateDate);
       this.issues.push(issue);
     }
   }
