@@ -44,7 +44,9 @@
             <th>Title</th>
             <th>Status</th>
             <th>Priority</th>
-            <th>DateCreated</th>
+            <th>Updated by</th>
+            <th>Date created</th>            
+            <th>Last update</th>
           </tr>
         </thead>
         <tbody>
@@ -55,7 +57,9 @@
             <td>{{bug.Title}}</td>
             <td style="background: #ccc;" class="clickable" (click)="openModalForUpdatingStatus(bug)">{{bug.Status}}</td>
             <td>{{bug.Priority}}</td>
+            <td>{{bug.UpdatedBy}}</td>
             <td>{{bug.DateCreated}}</td>
+            <td>{{bug.LastUpdateDate}}</td>
           </tr>
         </tbody>
     </table>
