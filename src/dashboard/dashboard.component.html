@@ -45,8 +45,9 @@
             <th>Status</th>
             <th>Priority</th>
             <th>Updated by</th>
-            <th>Date created</th>            
+            <th>Date created</th>
             <th>Last update</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -60,6 +61,12 @@
             <td>{{bug.UpdatedBy}}</td>
             <td>{{bug.DateCreated}}</td>
             <td>{{bug.LastUpdateDate}}</td>
+            <td>
+              <div layout="row" class="muteTxt clickable">
+                <i class="material-icons">delete</i>
+                <i class="material-icons">mode_edit</i>
+              </div>
+            </td>
           </tr>
         </tbody>
     </table>
