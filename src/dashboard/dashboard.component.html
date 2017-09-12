@@ -17,7 +17,7 @@
         <span class="caret"></span></button>
         <ul class="dropdown-menu">
           <li *ngFor='let project of projects; trackBy: index;'>
-            <a href="#" (click)="selectedProject = project">{{project.Name}}</a>
+            <a href="#" (click)="selectProject(project)">{{project.Name}}</a>
           </li>
         </ul>
       </div>
@@ -53,8 +53,8 @@
             <td>{{bug.CreatedBy}}</td>
             <td>{{bug.Id}}</td>
             <td>{{bug.Title}}</td>
-            <td>ToDo</td>
-            <td>ToDo Priority</td>
+            <td style="background: #ccc;" class="clickable" (click)="openModalForUpdatingStatus(bug)">{{bug.Status}}</td>
+            <td>{{bug.Priority}}</td>
             <td>{{bug.DateCreated}}</td>
           </tr>
         </tbody>
@@ -75,14 +75,13 @@
       </div>
       <div class="modal-body">
         
-        <div layout="row" class="project-field" layout-align="start center">
-          
-          <select>
-            <option (click)="selectedPriority = priotype" *ngFor="let prioType of priorityTypes; trackBy: index;">
+        <div layout="row" *ngIf="selectedPriorityType" class="project-field bugPriority" layout-align="start center">
+          <label>Select bug priority level</label>
+          <select  [(ngModel)]="selectedPriorityType.Id">
+            <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
               {{prioType.PriorityType1}}
             </option>
           </select>
-          <label *ngIf="selectedPriority">{{selectedPriority.PriorityType1}}</label>
         </div>
 
         <!--project title-->
@@ -171,6 +170,34 @@
           <button type="button" class="btn btn-default" *ngIf="modal.project.IsProjectPhase" data-dismiss="modal">Close</button>
         </div>
       </div>
-  
-    </div>
   </div>
+</div>
+
+<!-- template for modal of updating bug status -->
+<div id="modal-updatebug" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Update Status</h4>
+          </div>
+          <div class="modal-body">
+            
+              <div layout="row" *ngIf="toUpdateBug" class="project-field bugPriority" layout-align="start center">
+                  <label>Select bug priority level</label>
+                  <select [(ngModel)]="toUpdateBug.Id">
+                    <option [ngValue]="status.Id" *ngFor="let status of statusTypes; trackBy: index;">
+                      {{status.Status}}
+                    </option>
+                  </select>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="updateBug()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>

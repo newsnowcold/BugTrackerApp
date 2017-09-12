@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import {Http, Headers} from "@angular/http";
 import { UserService } from '../shared/user.service';
@@ -32,6 +32,11 @@ export class DashboardComponent implements OnInit {
   currentUserId: number;
   statusTypes: any;
   priorityTypes: any;
+
+  @Input() selectedPriorityType: any;
+  @Input() toUpdateBug: any;
+
+  @Output() output = new EventEmitter<any>();
 
   constructor(private http: Http,
               private router: Router,
@@ -92,12 +97,13 @@ export class DashboardComponent implements OnInit {
     this.issueStatusAndPriority.getPriorityTypes().subscribe(
       data => {
         this.priorityTypes = data;
+        this.selectedPriorityType = data[0];
       }
     )
   }
 
   private getStatusTypes() {
-    this.issueStatusAndPriority.getPriorityTypes().subscribe(
+    this.issueStatusAndPriority.getStatuses().subscribe(
       data => {
         this.statusTypes = data;
       }
@@ -110,10 +116,23 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private selectProject(p) {
+    this.selectedProject = p;
+    this.getIssues(this.selectedProject.Id);
+  }
+
+  private openModalForUpdatingStatus(bugData) {
+    $('#modal-updatebug').modal('show');
+    this.toUpdateBug = bugData;
+
+    this.output.emit(this.toUpdateBug);
+  }
+
   private doneAddingBug() {
     this.issue.title = undefined;
     this.issue.description = undefined;
     this.issue.priority = undefined;
+    this.selectedPriorityType = undefined;
 
     $(function () {
       $('#modal-reportbug').modal('toggle');
@@ -164,9 +183,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private saveBug() {
+
     this.http.post('Issue/' + this.selectedProject.Id, {
       Title: this.issue.title,
-      Description: this.issue.description
+      Description: this.issue.description,
+      PriorityId: this.selectedPriorityType.Id
     })
     .subscribe(
         result => {

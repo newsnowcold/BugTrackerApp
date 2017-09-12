@@ -12,6 +12,9 @@
 }
 
  /* MODAL */
+#modal-reportbug .bugPriority {
+    margin-bottom: 50px; 
+}
 
 #modal-addProject .project-members {
     width: 100%;
