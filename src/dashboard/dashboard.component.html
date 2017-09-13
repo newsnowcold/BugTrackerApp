@@ -63,8 +63,8 @@
             <td>{{bug.LastUpdateDate}}</td>
             <td>
               <div layout="row" class="muteTxt clickable">
-                <i class="material-icons">delete</i>
-                <i class="material-icons">mode_edit</i>
+                <i class="material-icons" (click)="openModalForRemovingBug(bug)">delete</i>
+                <i class="material-icons" (click)="openModalForUpdatingIssueObject(bug)">mode_edit</i>
               </div>
             </td>
           </tr>
@@ -110,6 +110,49 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="saveBug()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- template for modal of updating bug ticker -->
+<div id="modal-updatebugticket" class="modal fade" role="dialog">
+  <div class="modal-dialog" *ngIf="toUpdateBug">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update bug [{{toUpdateBug.Title}}]</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div layout="row" class="project-field bugPriority" layout-align="start center">
+          <label>Select bug priority level</label>
+          <select  [(ngModel)]="toUpdateBug.PriorityId">
+            <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
+              {{prioType.PriorityType1}}
+            </option>
+          </select>
+        </div>
+
+        <!--project title-->
+        <div layout="row" class="project-field" layout-align="space-between center">
+          <label>Bug title</label>
+          <input type="text" [(ngModel)]="toUpdateBug.Title" placeholder="Enter bug title title" class="text-default" flex="80">
+        </div>
+      
+        <!--project description [optional]-->
+        <div layout="row" class="project-field" layout-align="space-between center">
+          <label>Bug title</label>
+          
+          <textarea rows="4" cols="50" [(ngModel)]="toUpdateBug.Description" placeholder="Add bug description [optional]" flex="80"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updatebugticket()">Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -186,7 +229,7 @@
 
 <!-- template for modal of updating bug status -->
 <div id="modal-updatebug" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" *ngIf="toUpdateBug">
 
     <!-- Modal content-->
     <div class="modal-content" >
@@ -194,7 +237,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Update Status [{{toUpdateBug.Title}}]</h4>
           </div>
-          <div class="modal-body" *ngIf="toUpdateBug">
+          <div class="modal-body" >
             
               <div layout="row"  class="project-field bugPriority" layout-align="start center">
                   <label>Select updated status</label>
@@ -214,6 +257,27 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" (click)="updateBugStatus()">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- template for modal for deleting issue -->
+<div id="modal-removeBug" class="modal fade" role="dialog">
+  <div class="modal-dialog" *ngIf="toRemoveBug">
+
+    <!-- Modal content-->
+    <div class="modal-content" >
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Remove bug</h4>
+          </div>
+          <div class="modal-body" >
+              Are you to remove bug [{{toRemoveBug.Title}}]
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="removeBug()">Save</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
       </div>

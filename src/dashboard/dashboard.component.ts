@@ -35,8 +35,10 @@ export class DashboardComponent implements OnInit {
   statusTypes: any;
   priorityTypes: any;
 
+
   @Input() selectedPriorityType: any;
   @Input() toUpdateBug: any;
+  @Input() toRemoveBug: any;
 
   @Output() output = new EventEmitter<any>();
 
@@ -145,7 +147,7 @@ export class DashboardComponent implements OnInit {
 
   private openModalForUpdatingStatus(bugData) {
     $('#modal-updatebug').modal('show');
-    this.toUpdateBug = bugData;
+    this.toUpdateBug = <any> JSON.parse(JSON.stringify(bugData));
 
     this.output.emit(this.toUpdateBug);
   }
@@ -215,11 +217,58 @@ export class DashboardComponent implements OnInit {
         result => {
           this.getIssues(this.selectedProject.Id);
         },
-        err => console.log(err),
+        err => this.doneAddingBug(),
         () => this.doneAddingBug()
     )
   }
 
+  private openModalForRemovingBug(bug) {
+    $('#modal-removeBug').modal('show');
+    this.toRemoveBug = <any> JSON.parse(JSON.stringify(bug));
+
+    this.output.emit(this.toRemoveBug);
+  }
+
+  private removeBug() {
+    let url = 'Issue/Project/' + this.selectedProject.Id + '/';
+    this.http.delete(url + this.toRemoveBug.Id, {})
+    .subscribe(
+        result => {
+          this.getIssues(this.selectedProject.Id);
+        },
+        err => {},
+        () => {
+          $('#modal-removeBug').modal('hide');
+          this.toRemoveBug = undefined;
+        }
+    )
+  }
+
+  private openModalForUpdatingIssueObject(issue) {
+    $('#modal-updatebugticket').modal('show');
+    this.toUpdateBug = <any> JSON.parse(JSON.stringify(issue));
+
+    this.output.emit(this.toUpdateBug);
+  }
+
+  private updatebugticket() {
+    this.http.put('Issue/Project/' + this.selectedProject.Id, {
+      Id: this.toUpdateBug.Id,
+      Title: this.toUpdateBug.Title,
+      Description: this.toUpdateBug.Description,
+      PriorityId: this.toUpdateBug.PriorityId
+    })
+    .subscribe(
+        result => {
+          this.getIssues(this.selectedProject.Id);
+        },
+        err => this.toUpdateBug = undefined,
+        () => {
+          this.toUpdateBug = undefined;
+          $('#modal-updatebugticket').modal('hide');
+        }
+    )
+  }
 
   // helper methods
   private utcToLocalTime(timeString) {
@@ -245,6 +294,8 @@ export class DashboardComponent implements OnInit {
       issue.LastUpdateDate = this.utcToLocalTime(issue.LastUpdateDate);
       this.issues.push(issue);
     }
+
+    this.output.emit(this.issues);
   }
 
   private getUsersHandler(data: any) {
