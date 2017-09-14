@@ -7,7 +7,9 @@
         <ol class="breadcrumb muteTxt">
             <li>{{currentUser}}</li>
             <li (click)="logout()" class="clickable">Logout</li>
-            <li class="clickable">Project Settings</li>
+            <li class="clickable" (click)="goto('/settings')">
+                <i class="material-icons">settings</i>
+            </li>
           </ol>
     </div>
 </header>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
+import { HandyDandyTools } from '../shared/handyDandy';
 
 import { AppComponent } from './app.component';
 import { httpFactory } from './http.factory';
@@ -12,12 +13,13 @@ import { UserService } from '../shared/user.service';
 import { LoadersCssModule } from 'angular2-loaders-css';
 import { LoaderService } from '../shared/loader.service';
 import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
+import { ProjectService } from '../shared/projectService/project.service';
 
 // app modules
 
 // login
 import { LoginModuleRoute, LoginModuleComponents } from '../auth/module-login.module';
-import { ProjectManagementComponent } from '../project-management/project-management.component';
+import { SettingsModule } from '../settings/settings.module';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
@@ -27,7 +29,6 @@ import { HeaderComponent } from './header/header.component';
     // an array of login module components
     LoginModuleComponents,
     DashboardComponent,
-    ProjectManagementComponent,
     HeaderComponent
   ],
   imports: [
@@ -37,7 +38,8 @@ import { HeaderComponent } from './header/header.component';
     MainRoutingModule,
     // the actual login routing module
     LoginModuleRoute,
-    LoadersCssModule
+    LoadersCssModule,
+    SettingsModule
   ],
   bootstrap: [ AppComponent ],
   providers: [
@@ -49,7 +51,9 @@ import { HeaderComponent } from './header/header.component';
     AuthGuard,
     UserService,
     LoaderService,
-    IssueStatusAndPriority
-]
+    IssueStatusAndPriority,
+    ProjectService,
+    HandyDandyTools
+  ]
 })
 export class AppModule { }

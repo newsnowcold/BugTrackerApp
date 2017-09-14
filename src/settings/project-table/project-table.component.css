@@ -1,0 +1,12 @@
+
+.settings-table-container .project-detail-container,
+.settings-table-container .project-members-container,
+.settings-table-container .project-list-container {
+    padding: 10px;
+    border: solid 1px #CCC;
+}
+
+.settings-table-container .project-detail-container {
+    border-left: none;
+    border-right: none;
+}

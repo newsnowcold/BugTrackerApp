@@ -1,0 +1,32 @@
+<div layout="row" class="settings-table-container">
+  <div flex class="project-list-container">
+      <input type="text" placeholder="Search project"/>
+      <div class="clickable" *ngFor="let project of projects; trackBy: index;"
+        (click)="selectProject(project)">
+        {{project.Name}}
+      </div>
+  </div>
+  <div flex class="project-detail-container">
+    <div layout="column" *ngIf="selectedProject">
+      <label>Project details</label>
+      <div layout="row">
+        Created by: {{selectedProject.CreatedBy}}
+      </div>
+      <div layout="row">
+        Created Date: {{selectedProject.DateCreated}}
+      </div>
+      <div layout="row">
+        Modified Date: {{selectedProject.DateModified}}
+      </div>
+      <div layout="row">
+        Description: {{selectedProject.Description}}
+      </div>
+    </div>
+  </div>
+  <div flex class="project-members-container">
+    <label>Project members</label>
+    <div *ngFor="let member of projectMembers; trackBy: index;">
+      {{member.Name}}
+    </div>
+  </div>
+</div>
