@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from './settings.component';
 import { ProjectTableComponent } from './project-table/project-table.component';
+import { UsersTableComponent } from './users-table/users-table.component';
 import { SettingsRoutingModule } from './settings.routing';
 
 @NgModule({
@@ -11,7 +12,8 @@ import { SettingsRoutingModule } from './settings.routing';
   ],
   declarations: [
     SettingsComponent,
-    ProjectTableComponent
+    ProjectTableComponent,
+    UsersTableComponent
   ],
   bootstrap: [ SettingsComponent ]
 })
