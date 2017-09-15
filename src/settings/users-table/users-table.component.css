@@ -1,0 +1,8 @@
+.user-settings-table-container {
+    
+}
+
+.user-settings-table-container .users-data-table {
+    border: 1px solid #CCC;
+    padding: 10px;
+}

@@ -4,9 +4,21 @@
 .settings-table-container .project-list-container {
     padding: 10px;
     border: solid 1px #CCC;
+    height: 300px;
+    overflow-y:auto;
+    max-height: 300px;
 }
 
 .settings-table-container .project-detail-container {
     border-left: none;
     border-right: none;
+}
+
+.project-list-container .clickable.active {
+    background-color: #CCC;
+}
+
+.project-list-container .clickable {
+    background-color: none;
+    color:inherit;
 }

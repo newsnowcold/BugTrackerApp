@@ -1,3 +1,34 @@
 <div class="user-settings-table-container">
-  
+    <div layout="row">
+        <button class="btn default"
+        layout="row" layout-align="center center">
+            Add member
+            <i class="material-icons">add_box</i>
+        </button>
+        <button class="btn default"
+        layout="row" layout-align="center center">
+            Delete member
+            <i class="material-icons">delete</i>
+        </button>
+    </div>
+    <div class="users-data-table">
+        <table class="table">
+            <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Joined date</th>
+                <th>Email Confirmed</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users; trackBy: index;">
+                    <td>{{user.FirstName}}</td>
+                    <td>{{user.LastName}}</td>
+                    <td>{{user.Email}}</td>
+                    <td>{{user.JoinedDate}}</td>
+                    <td>{{(user.EmailConfirmed) ? 'yes': 'no'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

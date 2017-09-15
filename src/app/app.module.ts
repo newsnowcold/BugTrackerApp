@@ -14,7 +14,7 @@ import { LoadersCssModule } from 'angular2-loaders-css';
 import { LoaderService } from '../shared/loader.service';
 import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
 import { ProjectService } from '../shared/projectService/project.service';
-
+import { UsersService } from '../shared/usersService/users.service';
 // app modules
 
 // login
@@ -53,7 +53,8 @@ import { HeaderComponent } from './header/header.component';
     LoaderService,
     IssueStatusAndPriority,
     ProjectService,
-    HandyDandyTools
+    HandyDandyTools,
+    UsersService
   ]
 })
 export class AppModule { }
