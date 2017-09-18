@@ -19,6 +19,8 @@ import { UsersService } from '../shared/usersService/users.service';
 
 // login
 import { LoginModuleRoute, LoginModuleComponents } from '../auth/module-login.module';
+import { RegistrationModule } from '../registration/registration.module';
+
 import { SettingsModule } from '../settings/settings.module';
 import { HeaderComponent } from './header/header.component';
 
@@ -39,7 +41,8 @@ import { HeaderComponent } from './header/header.component';
     // the actual login routing module
     LoginModuleRoute,
     LoadersCssModule,
-    SettingsModule
+    SettingsModule,
+    RegistrationModule
   ],
   bootstrap: [ AppComponent ],
   providers: [

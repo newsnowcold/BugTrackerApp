@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class UserService {
     
     public token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
-
+    public user: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
     //token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
     private _username: string;
     private _userId: number;
@@ -55,6 +55,11 @@ export class UserService {
         this._tokenType = jsonData.token_type;
         this._username = jsonData.userName;
         this._userId = jsonData.userId;
+        this.user.next({
+            username: jsonData.userName,
+            userId: jsonData.userId
+        });
+        
         this.setToken(jsonData.access_token)
     }
 
