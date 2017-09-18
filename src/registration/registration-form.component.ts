@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Http, Headers} from "@angular/http";
+import { UserService } from '../shared/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-form',
@@ -10,13 +13,36 @@ export class RegistrationFormComponent implements OnInit {
   firstName: string;
   lastName: string;
 
-  constructor() { }
+
+  constructor(private http: Http,
+              private router: Router,
+              private userService: UserService) { 
+
+    this.userService.user.subscribe((val: any) => {
+      console.log(val)
+        if (val.userId > 0) {
+          console.log(val)
+          this.router.navigate(['']);
+        }
+    });
+  }
 
   ngOnInit() {
   }
 
   completeRegistration = function () {
-
+    this.http.post('User/complete-registration', {
+      FirstName: this.firstName,
+      LastName: this.lastName
+    })
+    .subscribe(
+        result => {
+            var data = result.json();
+            this.router.navigate(['']);
+        },
+        error => console.log(error),
+        () => console.log('done')
+    );
   }
 
 }

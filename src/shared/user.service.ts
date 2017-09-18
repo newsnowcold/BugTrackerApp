@@ -49,6 +49,13 @@ export class UserService {
         this.router.navigate(['/auth']);
     }
 
+    public setUser(email: string, id: number) {
+        this.user.next({
+            username: email,
+            userId: id
+        });
+    }
+
     // Helper functions/methods
 
     private processLoginReponse(jsonData: any) {
@@ -59,7 +66,7 @@ export class UserService {
             username: jsonData.userName,
             userId: jsonData.userId
         });
-        
+
         this.setToken(jsonData.access_token)
     }
 
