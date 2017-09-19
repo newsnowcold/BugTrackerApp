@@ -16,6 +16,12 @@ export class ProjectTableComponent implements OnInit {
   selectedProject: any;
   projectMembers: any;
   newProjectMembers: any[] = new Array();
+  users: any[];
+  toAddUser: any;
+
+  //for creating new project
+  new_projectName: string;
+  new_projectDescription: string;
 
 
   constructor(private projectService: ProjectService,
@@ -67,6 +73,108 @@ export class ProjectTableComponent implements OnInit {
     this.toAddUser = user;
   }
 
+  addAsProjectMember = function () {
+    var actionAllowed = true;
+    var memberName = this.toAddUser.FirstName + ' ' + this.toAddUser.LastName;
+    var newMember = {
+      Name: memberName,
+      Id: this.toAddUser.UserId
+    };
+
+    for (var i = 0; i < this.newProjectMembers.length; i++) {
+      if (newMember.Id == this.newProjectMembers[i].Id) {
+        actionAllowed = false;
+      }
+    }
+
+    if (actionAllowed) this.newProjectMembers.push(newMember);    
+    this.toAddUser = undefined;
+  }
+
+  openModalToModifyMembers = function () {
+    if (!this.selectedProject) return;
+    
+    this.newProjectMembers = undefined;
+
+    $('#modify-members-modal').modal('show');
+    this.getAllUsers();
+
+    this.newProjectMembers = this.handyDandyTools.copyObj(this.projectMembers);
+  }
+
+  saveNewSetOfMembers = function () {
+    var obj:any[] = new Array();
+
+    var members = this.newProjectMembers;
+    for (var i = 0; i < members.length; i++) {
+      obj.push({
+        UserId: members[i].Id
+      })
+    }
+
+    this.projectService
+      .updateProjectMembers(this.selectedProject.Id, obj)
+      .subscribe(
+        data => {
+          this.projectMembers = data;
+          this.getProjectsData();
+        },
+        error => {
+          this.reinitializeUpdatingNewSetofMembers();
+        },
+        () => {
+          this.reinitializeUpdatingNewSetofMembers();
+        }
+      )
+  }
+
+  getAllUsers = function () {
+    this.usersService
+      .getUsers()
+      .subscribe(
+      data => {
+        this.users = data;
+        console.log(data)
+      },
+      error => {
+        console.log('error')
+      },
+      () => {
+        console.log('done')
+      })
+  }
+
+  removeFromMembers = function (member) {
+    for (var i = 0; i < this.newProjectMembers.length; i++) {
+      var _member = this.newProjectMembers[i];
+      if (member.Id == _member.Id) {
+        this.newProjectMembers.splice(i, 1);
+        return;
+      }
+    }
+  }
+
+  saveNewProject = function () {
+    this.projectService.createProject({
+        Name: this.new_projectName,
+        Description: this.new_projectDescription
+    })
+    .subscribe(
+      data => {
+        this.getProjectsData();
+      },
+      error => {
+        this.reInitializeAddNewProjectModels();
+      },
+      () => {
+        this.reInitializeAddNewProjectModels();
+      })
+  }
+
+  deleteProjectConfirmModal = function () {
+    
+  }
+
 
   // HELPER FUNCTION/METHODS
   private processProjectList(data) {
@@ -83,9 +191,15 @@ export class ProjectTableComponent implements OnInit {
 
   }
 
-  private handleUpdateProjectMembers() {
-    console.log('putang ina wala nako kasabot!')
+  private reinitializeUpdatingNewSetofMembers() {
+    $('#modify-members-modal').modal('hide');
     this.projectMembers = this.handyDandyTools.copyObj(this.newProjectMembers);
     this.newProjectMembers = undefined;
+  }
+
+  private reInitializeAddNewProjectModels() {
+    $('#modal-addProject').modal('hide');
+    this.new_projectName = undefined;
+    this.new_projectDescription = undefined;
   }
 }

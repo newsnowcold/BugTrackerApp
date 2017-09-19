@@ -58,45 +58,6 @@ export class DashboardComponent implements OnInit {
     this.initializeModals();
   }
 
-  private addProject() {
-    this.http.post('Project', {
-      Name: this.project.title,
-      Description: this.project.description
-    })
-    .subscribe(
-        result => {
-            var data = result.json();
-            this.getProjectsHandler(data);
-        },
-        err => console.log(err)
-    )
-  }
-
-  // private addMembers() {
-  //   let addMembersUrl = 'Project/' + this.selectedProject.Id + '/members';
-  //   let tobeNewMembers = new Array();
-
-  //   for(var i = 0; i < this.users.length; i++) {
-
-  //     if (this.users[i].isSelected) {
-  //       tobeNewMembers.push({
-  //         "UserId": this.users[i].Id
-  //       });
-  //     }
-  //   }
-
-  //   this.http.post(addMembersUrl, {
-  //     Members: tobeNewMembers
-  //   })
-  //   .subscribe(
-  //       result => {
-  //           console.log(result);
-  //       },
-  //       err => console.log(err),
-  //       () => this.done()
-  //   )
-  // }
-
   private getPriorityTypes() {
     this.issueStatusAndPriority.getPriorityTypes().subscribe(
       data => {
@@ -113,12 +74,6 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
-  // private done() {
-  //   $(function () {
-  //     $('#modal-addProject').modal('toggle');
-  //   });
-  // }
 
   private selectProject(p) {
     this.selectedProject = p;
@@ -199,14 +154,6 @@ export class DashboardComponent implements OnInit {
               err => console.log(err)
             )
   }
-
-  // private save() {
-  //   if (this.modal.project.IsProjectPhase) {
-  //     this.addProject();
-  //   } else {
-  //     this.addMembers();
-  //   }
-  // }
 
   private saveBug() {
 
@@ -311,14 +258,6 @@ export class DashboardComponent implements OnInit {
     }
 
     this.users = data;
-  }
-
-  private getProjectsHandler(data: any) {
-    this.project.title = undefined;
-    this.project.description = undefined;
-    this.modal.project.IsProjectPhase = false;
-    this.getUsers();
-    // this.getProjects();
   }
 
   private initializeModals() {
