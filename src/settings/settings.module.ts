@@ -4,11 +4,13 @@ import { SettingsComponent } from './settings.component';
 import { ProjectTableComponent } from './project-table/project-table.component';
 import { UsersTableComponent } from './users-table/users-table.component';
 import { SettingsRoutingModule } from './settings.routing';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    SettingsRoutingModule
+    SettingsRoutingModule,
+    FormsModule
   ],
   declarations: [
     SettingsComponent,

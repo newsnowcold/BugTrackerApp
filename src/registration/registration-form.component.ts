@@ -19,9 +19,7 @@ export class RegistrationFormComponent implements OnInit {
               private userService: UserService) { 
 
     this.userService.user.subscribe((val: any) => {
-      console.log(val)
         if (val.userId > 0) {
-          console.log(val)
           this.router.navigate(['']);
         }
     });
@@ -38,6 +36,7 @@ export class RegistrationFormComponent implements OnInit {
     .subscribe(
         result => {
             var data = result.json();
+            this.userService.setUser(data.UserName, data.UserId)
             this.router.navigate(['']);
         },
         error => console.log(error),

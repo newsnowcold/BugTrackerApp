@@ -1,7 +1,8 @@
 <div class="user-settings-table-container">
     <div layout="row">
         <button class="btn default"
-        layout="row" layout-align="center center">
+        layout="row" layout-align="center center"
+        data-toggle="modal" data-target="#modal-inviteUser">
             Add member
             <i class="material-icons">add_box</i>
         </button>
@@ -32,3 +33,28 @@
         </table>
     </div>
 </div>
+
+
+<!-- template for modal for deleting issue -->
+<div id="modal-inviteUser" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content" >
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Invite user</h4>
+            </div>
+            <div class="modal-body" >
+                <div class="form-group">
+                    <label for="inviteEmail">Person to invite:</label>
+                    <input [(ngModel)]="inviteEmail" type="text" class="form-control" id="inviteEmail" placeholder="Enter email address">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="inviteUsers()">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+  </div>

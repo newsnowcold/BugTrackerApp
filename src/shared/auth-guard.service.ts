@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate() {
-
+    console.log(this.user)
     if (this.token == undefined) {
 
       this.router.navigate(['/auth']);
@@ -28,9 +28,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
       this.router.navigate(['complete-registration']);
       return false;
-
-    } else {
-      this.router.navigate(['']);
+      
     }
 
     return true;

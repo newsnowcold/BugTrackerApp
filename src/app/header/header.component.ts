@@ -16,10 +16,14 @@ export class HeaderComponent implements OnInit {
     this.userService.token.subscribe((val: string) => {
         this.token = val;
     });
+
+    this.userService.user.subscribe((val: any) => {
+      this.currentUser = val.username;
+    });
   }
 
   ngOnInit() {
-    this.currentUser = this.userService.getUser();
+    
   }
 
   logout() {
