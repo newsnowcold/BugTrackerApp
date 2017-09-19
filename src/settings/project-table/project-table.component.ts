@@ -175,6 +175,38 @@ export class ProjectTableComponent implements OnInit {
     
   }
 
+  editProjectDetails = function () {
+    this.toEditProjectDetails = <any> JSON.parse(JSON.stringify(this.selectedProject));
+
+    $('#modal-editProject-details').modal('show');
+  }
+
+  updateProjectDetails = function () {
+    var obj = {
+        Name: this.toEditProjectDetails.Name,
+        Description: this.toEditProjectDetails.Description
+    };
+
+    this.projectService
+      .updateProject(obj, this.selectedProject.Id)
+      .subscribe(
+        data => {
+          this.getProjectsData();
+          this.selectedProject.Description = this.toEditProjectDetails.Description;
+          this.selectedProject.Name = this.toEditProjectDetails.Name;
+        },
+        error => {
+          console.log('error')
+        },
+        () => {
+          $('#modal-editProject-details').modal('hide');
+        }
+      )
+
+  }
+
+
+
 
   // HELPER FUNCTION/METHODS
   private processProjectList(data) {
