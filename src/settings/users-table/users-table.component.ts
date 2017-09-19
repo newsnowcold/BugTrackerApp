@@ -12,6 +12,7 @@ declare var $:any;
 export class UsersTableComponent implements OnInit {
   users: any;
   inviteEmail: string;
+  toRemoveUser: any;
 
   constructor(private userService: UsersService,
               private handyDandyTools: HandyDandyTools) { }
@@ -50,6 +51,11 @@ export class UsersTableComponent implements OnInit {
           this.inviteEmail = undefined;
         }
       )
+  }
+
+  planToRemoveUser = function (user) {
+    this.toRemoveUser = user;
+    $("#modal-removeUser").modal('show');
   }
 
   // HELPER FUNCTION/METHODS
