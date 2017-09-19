@@ -1,9 +1,11 @@
 <div layout="row" class="settings-table-container">
   <div flex class="project-list-container">
     <input type="text" placeholder="Search project" class="form-control" />
-    <div class="clickable" *ngFor="let project of projects; trackBy: index;" (click)="selectProject(project)" layout-padding
+    <div class="clickable" *ngFor="let project of projects; trackBy: index;" 
+      layout-padding layout="row" layout-align="space-between center"
       [ngClass]="{'active': selectedProject ? project.Id == selectedProject.Id : false }">
-      {{project.Name}}
+      <div (click)="selectProject(project)" flex>{{project.Name}}</div>
+      <i class="material-icons muteTxt">delete</i>
     </div>
   </div>
   <div flex class="project-detail-container">
