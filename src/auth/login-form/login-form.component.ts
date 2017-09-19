@@ -15,6 +15,7 @@ declare var $:any;
 export class LoginFormComponent implements OnInit {
   username: string;
   password: string;
+  errorMsg: string;
 
   constructor(private http: Http, 
               private router: Router,
@@ -24,6 +25,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   login () {
+    this.errorMsg = undefined;
     let headers = new Headers();
     let data = $.param({ username: this.username, password: this.password, grant_type: 'password' });
     
@@ -37,7 +39,7 @@ export class LoginFormComponent implements OnInit {
             var data = result.json();
             this.handleResult(data);
         },
-        error => console.log(error),
+        error => this.handlerLoginError(error),
         () => console.log('done')
     );
   }
@@ -45,6 +47,11 @@ export class LoginFormComponent implements OnInit {
   private handleResult(data: any) {
     this.userService.saveToken(data);
     this.router.navigate(['']);
+  }
+
+  private handlerLoginError(err: any) {
+    var error = err.json();
+    this.errorMsg = error.error_description;
   }
 
 

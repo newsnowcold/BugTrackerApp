@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     });
 
     this.userService.user.subscribe((val: any) => {
-      this.currentUser = val.username;
+      this.currentUser = (val) ? val.username : undefined;
     });
   }
 
