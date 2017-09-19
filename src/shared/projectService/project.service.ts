@@ -44,6 +44,12 @@ export class ProjectService {
             .catch((error) => Observable.throw(error.json.error || 'Server error'));
     }
 
+    removeProject(projectId: number): Observable<any> {
+        return this.http.delete("Project/" + projectId)
+            .map((res) => this.extractData(res))
+            .catch((error) => Observable.throw(error.json.error || 'Server error'));
+    }
+
 
     // helper function / methods
     private extractData(res: any) {

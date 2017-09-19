@@ -18,6 +18,7 @@ export class ProjectTableComponent implements OnInit {
   newProjectMembers: any[] = new Array();
   users: any[];
   toAddUser: any;
+  toRemoveProject: any;
 
   //for creating new project
   new_projectName: string;
@@ -181,6 +182,30 @@ export class ProjectTableComponent implements OnInit {
     $('#modal-editProject-details').modal('show');
   }
 
+  // poping modal to verify if user realy wanted ro remove project
+  planToRemoveProject = function (project) {
+    $("#modal-removeProject").modal('show');
+    this.toRemoveProject = project;
+  }
+
+  // the confirmed action to remove the project
+  removeProject = function () {
+    this.projectService
+      .removeProject(this.toRemoveProject.Id)
+      .subscribe(
+        data => {
+          this.getProjectsData();
+          this.reInitializeSelectedProject();
+        },
+        error => {
+          $('#modal-removeProject').modal('hide');
+        },
+        () => {
+          $('#modal-removeProject').modal('hide');
+        }
+      )
+  }
+
   updateProjectDetails = function () {
     var obj = {
         Name: this.toEditProjectDetails.Name,
@@ -233,5 +258,11 @@ export class ProjectTableComponent implements OnInit {
     $('#modal-addProject').modal('hide');
     this.new_projectName = undefined;
     this.new_projectDescription = undefined;
+  }
+
+  private reInitializeSelectedProject() {
+    this.selectedProject = undefined;
+    this.toRemoveProject = undefined;
+    this.projectMembers = undefined;
   }
 }

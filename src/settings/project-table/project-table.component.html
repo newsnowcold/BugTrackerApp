@@ -1,26 +1,23 @@
-
-<button class="btn default" layout="row" layout-align="space-between"
-        data-toggle="modal" data-target="#modal-addProject">
+<button class="btn default" layout="row" layout-align="space-between" data-toggle="modal" data-target="#modal-addProject">
     <i class="material-icons" title="Add new project">add_box</i>
     Add project
 </button>
 <div layout="row" class="settings-table-container">
   <div flex class="project-list-container">
     <input type="text" placeholder="Search project" class="form-control" />
-    <div class="clickable" *ngFor="let project of projects; trackBy: index;" 
-      layout-padding layout="row" layout-align="space-between center"
+    <div class="clickable" *ngFor="let project of projects; trackBy: index;" layout-padding layout="row" layout-align="space-between center"
       [ngClass]="{'active': selectedProject ? project.Id == selectedProject.Id : false }">
       <div (click)="selectProject(project)" flex>{{project.Name}}</div>
-      <i class="material-icons muteTxt">delete</i>
+      <i class="material-icons muteTxt" (click)="planToRemoveProject(project)">delete</i>
     </div>
   </div>
   <div flex class="project-detail-container">
     <div layout="column" *ngIf="selectedProject">
       <div layout="row" layout-align="space-between center">
-          <label>Project details </label>
-          <i class="material-icons clickable" (click)="editProjectDetails()">mode_edit</i>
+        <label>Project details </label>
+        <i class="material-icons clickable" (click)="editProjectDetails()">mode_edit</i>
       </div>
-      
+
       <div layout="row">
         Created by: {{selectedProject.CreatedBy}}
       </div>
@@ -36,7 +33,7 @@
     </div>
   </div>
   <div flex class="project-members-container">
-    <div layout="row" layout-align="space-between center">
+    <div layout="row" layout-align="space-between center" *ngIf="projectMembers">
       <label>Project members</label>
       <i class="material-icons clickable" (click)="openModalToModifyMembers()">mode_edit</i>
     </div>
@@ -69,7 +66,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="updateProjectDetails()" >Save</button>
+        <button type="button" class="btn btn-primary" (click)="updateProjectDetails()">Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -91,8 +88,7 @@
         <div class="added-members">
           <div *ngFor="let member of newProjectMembers; trackBy: index;">
             <div layout="row" layout-align="start center">
-              <i class="material-icons clickable" style="margin-right: 15px;"
-               (click)="removeFromMembers(member)">block</i>
+              <i class="material-icons clickable" style="margin-right: 15px;" (click)="removeFromMembers(member)">block</i>
               <span>{{member.Name}}</span>
             </div>
           </div>
@@ -115,8 +111,7 @@
 
           <div layout="row" layout-align="center center" *ngIf="toAddUser">
             <span>{{toAddUser.FirstName}}&nbsp;{{toAddUser.LastName}}</span>
-            <button style="margin-left: 20px;" 
-              class="btn default" (click)="addAsProjectMember()">Add</button>
+            <button style="margin-left: 20px;" class="btn default" (click)="addAsProjectMember()">Add</button>
           </div>
         </div>
       </div>
@@ -153,7 +148,27 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="saveNewProject()" >Save</button>
+        <button type="button" class="btn btn-primary" (click)="saveNewProject()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-removeProject" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" *ngIf="toRemoveProject">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Remove project</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure to remove this project ({{toRemoveProject.Name}})?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="removeProject()">Sure</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
