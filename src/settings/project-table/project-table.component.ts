@@ -14,10 +14,8 @@ export class ProjectTableComponent implements OnInit {
 
   projects: any;
   selectedProject: any;
-  projectMembers: any[];
-  newProjectMembers: any[];
-  users: any[];
-  toAddUser: any;
+  projectMembers: any;
+  newProjectMembers: any[] = new Array();
 
 
   constructor(private projectService: ProjectService,
@@ -36,7 +34,8 @@ export class ProjectTableComponent implements OnInit {
   }
 
   getProjectsData = function () {
-    this.projectService.getProjects()
+    this.projectService
+      .getProjects()
       .subscribe(
       data => {
         this.processProjectList(data);
@@ -68,93 +67,6 @@ export class ProjectTableComponent implements OnInit {
     this.toAddUser = user;
   }
 
-  addAsProjectMember = function () {
-    var actionAllowed = true;
-    var memberName = this.toAddUser.FirstName + ' ' + this.toAddUser.LastName;
-    var newMember = {
-      Name: memberName,
-      Id: this.toAddUser.UserId
-    };
-
-    for (var i = 0; i < this.newProjectMembers.length; i++) {
-      if (newMember.Id == this.newProjectMembers[i].Id) {
-        actionAllowed = false;
-      }
-    }
-
-    if (actionAllowed) this.newProjectMembers.push(newMember);    
-    this.toAddUser = undefined;
-  }
-
-  openModalToModifyMembers = function () {
-    if (!this.selectedProject) return;
-    
-    this.newProjectMembers = undefined;
-
-    $('#modify-members-modal').modal('show');
-    this.getAllUsers();
-
-    this.newProjectMembers = this.handyDandyTools.copyObj(this.projectMembers);
-  }
-
-  saveNewSetOfMembers = function () {
-    var obj:any[] = new Array();
-    // {
-    //     public int UserId { get; set; }
-    // }
-
-    var members = this.newProjectMembers;
-    for (var i = 0; i < members.length; i++) {
-      obj.push({
-        UserId: members[i].Id
-      })
-    };
-
-    this.projectService.updateProjectMembers(
-      this.selectedProject.Id,
-      obj)
-      .subscribe(
-        data => {
-          this.getProjectsData();
-          this.handleUpdateProjectMembers();
-        },
-        error => {
-          $('#modify-members-modal').modal('hide');
-          this.getProjectsData();
-          this.handleUpdateProjectMembers();
-        },
-        () => {
-          $('#modify-members-modal').modal('hide');
-          // this.getProjectsData();
-        })
-
-  }
-
-  getAllUsers = function () {
-    this.usersService
-      .getUsers()
-      .subscribe(
-      data => {
-        this.users = data;
-        console.log(data)
-      },
-      error => {
-        console.log('error')
-      },
-      () => {
-        console.log('done')
-      })
-  }
-
-  removeFromMembers = function (member) {
-    for (var i = 0; i < this.newProjectMembers.length; i++) {
-      var _member = this.newProjectMembers[i];
-      if (member.Id == _member.Id) {
-        this.newProjectMembers.splice(i, 1);
-        return;
-      }
-    }
-  }
 
   // HELPER FUNCTION/METHODS
   private processProjectList(data) {
