@@ -5,11 +5,12 @@
   <div layout="column">
 
     <div class="project-navigation" layout="row" layout-align="start center">
-      <button class="btn default" layout="row" layout-align="space-between"
+      <!-- <button class="btn default" layout="row" layout-align="space-between"
         data-toggle="modal" data-target="#modal-addProject">
         <i class="material-icons" title="Add new project">add_box</i>
         Add project
-      </button>
+      </button> -->
+      <div *ngIf="!selectedProject" class="muteTxt">Please add project. go to settings page and add project</div>
       
       <div class="dropdown" *ngIf="selectedProject">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">

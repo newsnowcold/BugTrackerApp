@@ -72,30 +72,30 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  private addMembers() {
-    let addMembersUrl = 'Project/' + this.selectedProject.Id + '/members';
-    let tobeNewMembers = new Array();
+  // private addMembers() {
+  //   let addMembersUrl = 'Project/' + this.selectedProject.Id + '/members';
+  //   let tobeNewMembers = new Array();
 
-    for(var i = 0; i < this.users.length; i++) {
+  //   for(var i = 0; i < this.users.length; i++) {
 
-      if (this.users[i].isSelected) {
-        tobeNewMembers.push({
-          "UserId": this.users[i].Id
-        });
-      }
-    }
+  //     if (this.users[i].isSelected) {
+  //       tobeNewMembers.push({
+  //         "UserId": this.users[i].Id
+  //       });
+  //     }
+  //   }
 
-    this.http.post(addMembersUrl, {
-      Members: tobeNewMembers
-    })
-    .subscribe(
-        result => {
-            console.log(result);
-        },
-        err => console.log(err),
-        () => this.done()
-    )
-  }
+  //   this.http.post(addMembersUrl, {
+  //     Members: tobeNewMembers
+  //   })
+  //   .subscribe(
+  //       result => {
+  //           console.log(result);
+  //       },
+  //       err => console.log(err),
+  //       () => this.done()
+  //   )
+  // }
 
   private getPriorityTypes() {
     this.issueStatusAndPriority.getPriorityTypes().subscribe(
@@ -114,11 +114,11 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  private done() {
-    $(function () {
-      $('#modal-addProject').modal('toggle');
-    });
-  }
+  // private done() {
+  //   $(function () {
+  //     $('#modal-addProject').modal('toggle');
+  //   });
+  // }
 
   private selectProject(p) {
     this.selectedProject = p;
@@ -181,8 +181,10 @@ export class DashboardComponent implements OnInit {
                     var data = result.json();
                     this.projects = data;
 
-                    this.selectedProject = data[0];
-                    this.getIssues(data[0].Id);
+                    if (data.length > 0) {
+                      this.selectedProject = data[0];
+                      this.getIssues(data[0].Id);
+                    }
                 }
             );
   }
@@ -198,13 +200,13 @@ export class DashboardComponent implements OnInit {
             )
   }
 
-  private save() {
-    if (this.modal.project.IsProjectPhase) {
-      this.addProject();
-    } else {
-      this.addMembers();
-    }
-  }
+  // private save() {
+  //   if (this.modal.project.IsProjectPhase) {
+  //     this.addProject();
+  //   } else {
+  //     this.addMembers();
+  //   }
+  // }
 
   private saveBug() {
 
