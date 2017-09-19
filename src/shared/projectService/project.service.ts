@@ -29,4 +29,11 @@ export class ProjectService {
                         .map((res) => res.json())
                         .catch((error) => Observable.throw(error.json.error || 'Server error'));
     }
+
+    updateProjectMembers(projectId: number, members: any[]) : Observable<any> {
+        var obj = { Members: members };
+        return this.http.post("Project/" + projectId+ "/members", obj)
+                        .map((res) => res.json())
+                        .catch((error) => Observable.throw(error.json.error || 'Server error'));
+    }
 }

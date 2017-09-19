@@ -16,4 +16,8 @@ export class HandyDandyTools {
 
         return moment(localTime).format('MM/DD/YYYY h:mm a');
     }
+
+    public copyObj (obj: any) {
+        return <any> JSON.parse(JSON.stringify(obj));
+    }
 }
