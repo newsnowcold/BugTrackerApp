@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { HandyDandyTools } from '../shared/handyDandy';
-
+import { Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { httpFactory } from './http.factory';
 import { AuthGuard } from '../shared/auth-guard.service';
@@ -49,7 +49,7 @@ import { HeaderComponent } from './header/header.component';
     {
         provide: Http,
         useFactory: httpFactory,
-        deps: [XHRBackend, RequestOptions, LoaderService]
+        deps: [XHRBackend, RequestOptions, LoaderService, Router]
     },
     AuthGuard,
     UserService,

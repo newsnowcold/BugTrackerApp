@@ -3,18 +3,20 @@
     https://scotch.io/@kashyapmukkamala/using-http-interceptor-with-angular2
 */
 
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import { environment } from "../environments/environment";
 import { LoaderService } from '../shared/loader.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class InterceptedHttp extends Http {
 
     constructor(backend: ConnectionBackend, 
                 defaultOptions: RequestOptions,
-                private loaderService: LoaderService) {  
+                private loaderService: LoaderService,
+                private router: Router) {  
         
         super(backend, defaultOptions);
     }
@@ -89,16 +91,38 @@ export class InterceptedHttp extends Http {
                     });
     }
 
+    private extractData(res: any) {        
+        return res.text() ? res.json() : {}; ;
+    }
     
     private onCatch(error: any, caught: Observable<any>): Observable<any> {
         return Observable.throw(error);
     }
 
-    private onError(ada: any): void {
+    private onError(error: any): void {
        // this.hideLoader();
+       var errData = this.extractData(error);
+       console.log(errData)
+       if (errData.Code == 500) {
+           alert("Error id: " + errData.Id + "\n" + errData.Message)
+       } else if (errData.Code == 400) {
+           var msg = errData.Message;
+           msg += "See list of errors below:\n\n";
+
+           for (var i = 0; i < errData.Errors.length; i++) {
+               var error = errData.Errors[i];
+               msg += error.Reason + "\n";
+           }
+
+           alert(msg);
+       } else if (errData.Code == 401) {
+            this.router.navigate(['/auth']);
+       } else if (errData.Code == 403 ) {
+            alert("You are forbidden for this action");
+       }
     }
 
-    private onSuccess(asda: any): void {
+    private onSuccess(data: any): void {
        // this.hideLoader();
     }
 
