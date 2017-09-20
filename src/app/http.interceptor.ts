@@ -9,6 +9,7 @@ import { Observable } from "rxjs/Rx";
 import { environment } from "../environments/environment";
 import { LoaderService } from '../shared/loader.service';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/user.service';
 
 @Injectable()
 export class InterceptedHttp extends Http {
@@ -16,7 +17,8 @@ export class InterceptedHttp extends Http {
     constructor(backend: ConnectionBackend, 
                 defaultOptions: RequestOptions,
                 private loaderService: LoaderService,
-                private router: Router) {  
+                private router: Router,
+                private userService: UserService) {  
         
         super(backend, defaultOptions);
     }
@@ -100,9 +102,9 @@ export class InterceptedHttp extends Http {
     }
 
     private onError(error: any): void {
-       // this.hideLoader();
+
        var errData = this.extractData(error);
-       console.log(errData)
+
        if (errData.Code == 500) {
            alert("Error id: " + errData.Id + "\n" + errData.Message)
        } else if (errData.Code == 400) {
@@ -116,8 +118,16 @@ export class InterceptedHttp extends Http {
 
            alert(msg);
        } else if (errData.Code == 401) {
+            this.userService.removeToken();
             this.router.navigate(['/auth']);
        } else if (errData.Code == 403 ) {
+            alert("You are forbidden for this action");
+       }
+
+       if (error.status == 401) {
+            this.userService.removeToken();
+            this.router.navigate(['/auth']);
+       } else if  (error.status == 403 ) {
             alert("You are forbidden for this action");
        }
     }

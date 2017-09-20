@@ -30,6 +30,13 @@ export class UsersService {
                         
     }
 
+    removeUser(userId:number) : Observable<any> {
+        
+        return this.http.delete("User/" + userId, {})
+                        .map((res) => this.extractData(res))
+                        .catch((error) => Observable.throw(error.json.error || 'Server error'));                
+    }
+
     private extractData(res: any) {        
         return res.text() ? res.json() : {}; ;
     }

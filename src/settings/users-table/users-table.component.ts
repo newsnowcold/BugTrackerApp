@@ -42,9 +42,10 @@ export class UsersTableComponent implements OnInit {
       .subscribe(
         data => {;
           this.getUsersData();
+          this.inviteEmail = undefined;
         },
         err => {
-          console.log(err)
+          this.inviteEmail = undefined;
         },
         () => {
           $('#modal-inviteUser').modal('hide');
@@ -56,6 +57,24 @@ export class UsersTableComponent implements OnInit {
   planToRemoveUser = function (user) {
     this.toRemoveUser = user;
     $("#modal-removeUser").modal('show');
+  }
+
+  removeUser = function () {
+    this.userService.removeUser(this.toRemoveUser.UserId)
+      .subscribe(
+        data => {;
+          this.getUsersData();
+          this.toRemoveUser = undefined;
+        },
+        err => {
+          $("#modal-removeUser").modal('hide');
+          this.toRemoveUser = undefined;
+        },
+        () => {
+          $("#modal-removeUser").modal('hide');
+          this.toRemoveUser = undefined;
+        }
+      )
   }
 
   // HELPER FUNCTION/METHODS

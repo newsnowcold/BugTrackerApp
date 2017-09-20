@@ -83,7 +83,7 @@
       </div>
       <div class="modal-body">
         
-        <div layout="row" *ngIf="selectedPriorityType" class="project-field bugPriority" layout-align="start center">
+        <div layout="row" *ngIf="priorityTypes" class="project-field bugPriority" layout-align="start center">
           <label>Select bug priority level</label>
           <select  [(ngModel)]="selectedPriorityType.Id">
             <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">

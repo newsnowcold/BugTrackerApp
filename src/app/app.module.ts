@@ -46,18 +46,18 @@ import { HeaderComponent } from './header/header.component';
   ],
   bootstrap: [ AppComponent ],
   providers: [
-    {
-        provide: Http,
-        useFactory: httpFactory,
-        deps: [XHRBackend, RequestOptions, LoaderService, Router]
-    },
     AuthGuard,
     UserService,
     LoaderService,
     IssueStatusAndPriority,
     ProjectService,
     HandyDandyTools,
-    UsersService
+    UsersService,
+    {
+        provide: Http,
+        useFactory: httpFactory,
+        deps: [XHRBackend, RequestOptions, LoaderService, Router, UserService]
+    }
   ]
 })
 export class AppModule { }

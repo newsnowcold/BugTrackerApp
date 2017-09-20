@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router } from '@angular/router';
+import { CanActivate, 
+        CanActivateChild, 
+        Router, 
+        ActivatedRouteSnapshot, 
+        RouterStateSnapshot } from '@angular/router';
 import { UserService } from '../shared/user.service';
 
 @Injectable()
@@ -17,10 +21,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     });
   }
 
-  canActivate() {
-    console.log(this.user)
-    if (this.token == undefined) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
+    // check if user is authenticated to access
+    if (this.token == undefined) {
       this.router.navigate(['/auth']);
       return false;
 
@@ -28,9 +32,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
       this.router.navigate(['complete-registration']);
       return false;
-      
     }
-
     return true;
   }
 

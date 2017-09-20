@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
     this.issue.title = undefined;
     this.issue.description = undefined;
     this.issue.priority = undefined;
-    this.selectedPriorityType = undefined;
+    this.selectedPriorityType = this.priorityTypes[0];
 
     $(function () {
       $('#modal-reportbug').modal('toggle');
