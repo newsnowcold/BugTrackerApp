@@ -5,7 +5,7 @@
     </div>
     <div class="menus">
         <ol class="breadcrumb muteTxt">
-            <li>{{currentUser}}</li>
+            <li (click)="goto('/user-profile')" class="clickable">{{currentUser}}</li>
             <li (click)="logout()" class="clickable">Logout</li>
             <li class="clickable" (click)="goto('/settings')">
                 <i class="material-icons">settings</i>
