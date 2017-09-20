@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import {Http, Headers} from "@angular/http";
+import { Http, Headers } from "@angular/http";
 import { UserService } from '../shared/user.service';
 import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
 declare var $:any;

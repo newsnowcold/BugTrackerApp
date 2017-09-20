@@ -3,13 +3,15 @@
 import { Injectable }     from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { Headers } from "@angular/http";
 
 @Injectable()
 export class UserService {
     
     public token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
     public user: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+    public userRole: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+
     //token: BehaviorSubject<string> = new BehaviorSubject<string>(undefined);
     private _username: string;
     private _userId: number;
@@ -21,7 +23,7 @@ export class UserService {
         this.initializeToken();
     }
 
-
+  
     public getUser() {
         return this._username;
     }
@@ -34,6 +36,10 @@ export class UserService {
         var fullToken = this._tokenType + ' ' + token;
 
         this.token.next(fullToken);
+    }
+
+    public setUserRole(role: string) {
+        this.userRole.next(role);
     }
 
     public saveToken(data: any) {
