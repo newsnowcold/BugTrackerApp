@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit {
             result => {
                 var data = result.json();
                 
-                this.userService.setUserRole(data[0].Role)
+                this.userService.setUserRole(data.Role)
             },
             err => console.log(err),
             () => { console.log('done') }

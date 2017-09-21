@@ -4,14 +4,14 @@
             <h3 class="title">Update profile</h3>
             <div class="form-group">
                 <label for="fname">First Name:</label>
-                <input type="text" class="form-control" id="fname">
+                <input *ngIf="currentUser" type="text" [(ngModel)]="currentUser.FirstName" class="form-control" id="fname">
             </div>
             <div class="form-group">
                 <label for="lname">Last Name:</label>
-                <input type="text" class="form-control" id="lname">
+                <input *ngIf="currentUser"type="text" [(ngModel)]="currentUser.LastName" class="form-control" id="lname">
             </div>
             <div layout="row" layout-align="end">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" (click)="updateUserProfile()">
                     Save
                 </button>
             </div>
@@ -21,18 +21,18 @@
             <h3 class="title">Update password</h3>
             <div class="form-group">
                 <label for="usr">Old Password:</label>
-                <input type="password" class="form-control" id="usr">
+                <input type="password" [(ngModel)]="oldPass" class="form-control" id="usr">
             </div>
             <div class="form-group">
                 <label for="pwd">New Password:</label>
-                <input type="password" class="form-control" id="pwd">
+                <input type="password" [(ngModel)]="newPass" class="form-control" id="pwd">
             </div>
             <div class="form-group">
-                <label for="pwd">Confirm Password:</label>
-                <input type="password" class="form-control" id="pwd">
+                <label for="cpwd">Confirm Password:</label>
+                <input type="password" [(ngModel)]="newPassConfirm" class="form-control" id="cpwd">
             </div>
             <div layout="row" layout-align="end">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" (click)="changePassword()">
                         Save
                     </button>
                 </div>
