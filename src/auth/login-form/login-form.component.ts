@@ -54,5 +54,9 @@ export class LoginFormComponent implements OnInit {
     this.errorMsg = error.error_description;
   }
 
+  private goTo(loc: string) {
+    this.router.navigate([loc]);
+  }
+
 
 }
