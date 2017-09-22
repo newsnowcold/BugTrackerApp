@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoaderService } from '../shared/loader.service';
 import { UserService } from '../shared/user.service';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -10,11 +11,13 @@ import { Http } from '@angular/http';
 })
 export class AppComponent {
     showLoader: boolean;
+    unauthorizeRoutes: string[] = new Array("auth", "forgot-password", "set-new-password");
 
     constructor(
         private loaderService: LoaderService,
         private userService: UserService,
-        private http: Http) {
+        private http: Http,
+        private router:Router) {
     }
 
     ngOnInit() {
@@ -27,6 +30,10 @@ export class AppComponent {
 
 
     public checkUserUpdates() {
+        let currentUrl = this.router.url;
+
+        if (this.unauthorizeRoutes.indexOf(currentUrl) != -1) return;
+        
         this.http.get('account')
             .subscribe(
             result => {
