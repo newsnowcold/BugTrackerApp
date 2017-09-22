@@ -22,11 +22,6 @@ export class SetNewPasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.activatedRoute.params.subscribe((params: Params) => {
-    //   console.log(params)
-    //   this.email = params['email'];
-    //   this.token = params['token'];
-    // });
     this.email = this.activatedRoute.snapshot.queryParams["email"];
     this.token = this.activatedRoute.snapshot.queryParams["token"];
   }
