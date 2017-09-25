@@ -149,3 +149,7 @@ article {
     max-height: 300px;
     overflow-y: auto;
 }
+
+.bm-padding {
+    padding: 5px 10px;
+}

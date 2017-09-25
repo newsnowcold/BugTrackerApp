@@ -26,10 +26,13 @@ import { UserProfileModule } from '../user-profile/user-profile.module';
 import { SettingsModule } from '../settings/settings.module';
 import { HeaderComponent } from './header/header.component';
 
+// Pipes
+import { KeysPipe } from '../shared/pipes/object-keys.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
-
+    KeysPipe,
     // an array of login module components
     LoginModuleComponents,
     DashboardComponent,
