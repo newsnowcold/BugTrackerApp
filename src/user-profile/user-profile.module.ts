@@ -4,6 +4,8 @@ import { UserProfileRoutingModule } from './user-profile.routing';
 import { UserProfileComponent } from './user-profile.component';
 import { FormsModule } from '@angular/forms';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

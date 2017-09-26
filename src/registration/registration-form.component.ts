@@ -19,8 +19,11 @@ export class RegistrationFormComponent implements OnInit {
               private userService: UserService) { 
 
     this.userService.user.subscribe((val: any) => {
-        if (val.userId > 0) {
+
+        if (val && val.userId > 0) {
           this.router.navigate(['']);
+        } else {
+          this.router.navigate(['/auth']);
         }
     });
   }

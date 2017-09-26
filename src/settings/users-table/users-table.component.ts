@@ -26,7 +26,6 @@ export class UsersTableComponent implements OnInit {
       .subscribe(
         data => {
           this.processProjectList(data);
-          console.log(data)
         },
         err => {
           console.log(err)

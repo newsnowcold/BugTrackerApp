@@ -6,6 +6,9 @@ import { UsersTableComponent } from './users-table/users-table.component';
 import { SettingsRoutingModule } from './settings.routing';
 import { FormsModule } from '@angular/forms';
 
+
+import { FullTextSearchPipe } from '../shared/pipes/ngFor-fulltxt-filter.pipe';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +18,8 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     SettingsComponent,
     ProjectTableComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    FullTextSearchPipe
   ],
   bootstrap: [ SettingsComponent ]
 })
