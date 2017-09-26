@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-    origin: 'http://localhost:4000/api/'
+    origin: 'http://medbillbugtrackerapp.azurewebsites.net/'
 };
