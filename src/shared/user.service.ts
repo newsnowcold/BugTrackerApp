@@ -53,6 +53,7 @@ export class UserService {
         localStorage.removeItem(this.l_storageName);
         this.resetVariables();
         this.router.navigate(['/auth']);
+        location.reload();
     }
 
     public setUser(email: string, id: number) {
