@@ -13,8 +13,9 @@
            {{ selectedProject.Name }}
         <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                    <li *ngFor='let project of projects; trackBy: index;'>
-                        <a href="#" (click)="selectProject(project)">{{project.Name}}</a>
+                    <li class="bm-padding clickable" (click)="selectProject(project)" 
+                        *ngFor='let project of projects; trackBy: index;'>
+                        <span>{{project.Name}}</span>
                     </li>
                 </ul>
             </div>
