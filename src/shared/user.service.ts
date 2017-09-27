@@ -52,7 +52,7 @@ export class UserService {
     public removeToken() {
         localStorage.removeItem(this.l_storageName);
         this.resetVariables();
-        this.router.navigate(['/auth']);
+        this.router.navigate(['']);
         location.reload();
     }
 
