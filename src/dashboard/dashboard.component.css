@@ -27,3 +27,7 @@
 #modal-addProject .project-members .added {
     padding: 10px;
 }
+
+.assignment > label {
+    margin-right: 5px;
+}
