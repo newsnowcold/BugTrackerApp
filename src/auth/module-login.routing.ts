@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RequestChangePasswordComponent } from './request-change-password/request-change-password.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
-import { AuthGuard } from '../shared/auth-guard.service';
+import { AuthGuard } from '../shared/Services/authGuardService/auth-guard.service';
 
 const routes: Routes = [
     {   

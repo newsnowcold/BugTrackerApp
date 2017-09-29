@@ -5,9 +5,9 @@
 
 import {XHRBackend, Http, RequestOptions} from "@angular/http";
 import {InterceptedHttp} from "./http.interceptor";
-import { LoaderService } from '../shared/loader.service';
+import { LoaderService } from '../shared/Services/loaderService/loader.service';
 import { Router } from '@angular/router';
-import { UserService } from '../shared/user.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 
 export function httpFactory(
     xhrBackend: XHRBackend, 
