@@ -10,8 +10,8 @@
 
             <div class="dropdown" *ngIf="selectedProject">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-           {{ selectedProject.Name }}
-        <span class="caret"></span></button>
+                {{ selectedProject.Name }}
+                <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                     <li class="bm-padding clickable" (click)="selectProject(project)" 
                         *ngFor='let project of projects; trackBy: index;'>
@@ -71,11 +71,14 @@
                         <th>Creator</th>
                         <th>Ticket #</th>
                         <th>Title</th>
+                        <th>Assigned To</th>
                         <th>Status</th>
                         <th>Priority</th>
                         <th>Updated by</th>
                         <th>Date created</th>
                         <th>Last update</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -86,11 +89,14 @@
                             <td>{{bug.CreatedBy}}</td>
                             <td>{{bug.Id}}</td>
                             <td>{{bug.Title}}</td>
+                            <td>{{bug.AssignedTo}}</td>
                             <td style="background: #ccc;" class="clickable" (click)="openModalForUpdatingStatus(bug)">{{bug.Status}}</td>
                             <td>{{bug.Priority}}</td>
                             <td>{{bug.UpdatedBy}}</td>
                             <td>{{bug.DateCreated}}</td>
                             <td>{{bug.LastUpdateDate}}</td>
+                            <td>{{bug.StartDate}}</td>
+                            <td>{{bug.EndDate}}</td>
                             <td>
                                 <div layout="row" class="muteTxt clickable">
                                     <i class="material-icons" (click)="openModalForRemovingBug(bug)">delete</i>
@@ -116,14 +122,26 @@
                 <h4 class="modal-title">Report bug</h4>
             </div>
             <div class="modal-body">
+                <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field dropdown" >
+                    <label>Assign to</label>
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{ assignTicketTo ? assignTicketTo.Name : "" }}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li class="bm-padding clickable" (click)="selectMemberToAssign(member)" 
+                            *ngFor='let member of projectMembers; trackBy: index;'>
+                            <span>{{member.Name}}</span>
+                        </li>
+                    </ul>
+                </div>
 
                 <div layout="row" *ngIf="priorityTypes" class="project-field bugPriority" layout-align="start center">
                     <label>Select bug priority level</label>
                     <select [(ngModel)]="selectedPriorityType.Id">
-            <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
-              {{prioType.PriorityType1}}
-            </option>
-          </select>
+                        <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
+                        {{prioType.PriorityType1}}
+                        </option>
+                    </select>
                 </div>
 
                 <!--project title-->
@@ -132,11 +150,22 @@
                     <input type="text" [(ngModel)]="issue.title" placeholder="Enter bug title title" class="text-default" flex="80">
                 </div>
 
+
                 <!--project description [optional]-->
                 <div layout="row" class="project-field" layout-align="space-between center">
                     <label>Bug description</label>
 
                     <textarea rows="4" cols="50" [(ngModel)]="issue.description" placeholder="Add bug description [optional]" flex="80"></textarea>
+                </div>
+
+                <div layout="row" class="project-field" layout-align="start center" layout-padding>
+                    <label>Start Date</label>
+                    <input type="text" style="margin-left: 25px;" id="startDate" class="text-default">
+                </div>
+
+                <div layout="row" class="project-field" layout-align="start center" layout-padding>
+                    <label>End Date</label>
+                    <input type="text" style="margin-left: 33px;" id="endDate" class="text-default">
                 </div>
             </div>
             <div class="modal-footer">
@@ -159,14 +188,25 @@
                 <h4 class="modal-title">Update bug [{{toUpdateBug.Title}}]</h4>
             </div>
             <div class="modal-body">
-
+                <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field dropdown" >
+                    <label>Assign to</label>
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{ toUpdateBug.AssignedTo }}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li class="bm-padding clickable" (click)="updateTicketAssignment(member)" 
+                            *ngFor='let member of projectMembers; trackBy: index;'>
+                            <span>{{member.Name}}</span>
+                        </li>
+                    </ul>
+                </div>
                 <div layout="row" class="project-field bugPriority" layout-align="start center">
                     <label>Select bug priority level</label>
                     <select [(ngModel)]="toUpdateBug.PriorityId">
-            <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
-              {{prioType.PriorityType1}}
-            </option>
-          </select>
+                        <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
+                        {{prioType.PriorityType1}}
+                        </option>
+                    </select>
                 </div>
 
                 <!--project title-->
@@ -180,6 +220,16 @@
                     <label>Bug title</label>
 
                     <textarea rows="4" cols="50" [(ngModel)]="toUpdateBug.Description" placeholder="Add bug description [optional]" flex="80"></textarea>
+                </div>
+
+                <div layout="row" class="project-field" layout-align="start center" layout-padding>
+                    <label>Start Date</label>
+                    <input type="text" style="margin-left: 25px;" id="updateStartDate" class="text-default">
+                </div>
+
+                <div layout="row" class="project-field" layout-align="start center" layout-padding>
+                    <label>End Date</label>
+                    <input type="text" style="margin-left: 33px;" id="updateEndDate" class="text-default">
                 </div>
             </div>
             <div class="modal-footer">

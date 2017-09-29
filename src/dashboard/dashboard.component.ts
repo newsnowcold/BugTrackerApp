@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Http, Headers } from "@angular/http";
 import { UserService } from '../shared/user.service';
 import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
+import { ProjectService } from '../shared/projectService/project.service';
 declare var $: any;
 declare var moment: any;
 
@@ -36,6 +37,8 @@ export class DashboardComponent implements OnInit {
     priorityTypes: any;
     statusTypeFilter: any;
     priorityTypeFilter: any;
+    projectMembers: any;
+    assignTicketTo: any;
 
 
     @Input() selectedPriorityType: any;
@@ -47,6 +50,7 @@ export class DashboardComponent implements OnInit {
     constructor(private http: Http,
         private router: Router,
         private userService: UserService,
+        private projectService: ProjectService,
         private issueStatusAndPriority: IssueStatusAndPriority) {
 
         this.currentUser = userService.getUser();
@@ -58,6 +62,11 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.getProjects();
         this.initializeModals();
+
+        $( function() {
+            $('#startDate').datepicker({ dateFormat: 'mm/dd/yy' });
+            $('#endDate').datepicker({ dateFormat: 'mm/dd/yy' });
+        })
     }
 
     // Preparing/Calling data for static objects
@@ -78,6 +87,25 @@ export class DashboardComponent implements OnInit {
             }
         )
     }
+
+    private selectMemberToAssign(member) {
+        this.assignTicketTo = member;
+    }
+
+    private getMembers = function (projectId) {
+        this.projectService.getProjectMembers(projectId)
+          .subscribe(
+          data => {
+            this.projectMembers = data;
+          },
+          error => {
+            console.log('error')
+          },
+          () => {
+            console.log('done')
+          })
+      }
+
 
 
     private handlePriorityTypesData = function (data) {
@@ -128,6 +156,7 @@ export class DashboardComponent implements OnInit {
 
     private openModalForUpdatingStatus(bugData) {
         $('#modal-updatebug').modal('show');
+
         this.toUpdateBug = <any>JSON.parse(JSON.stringify(bugData));
 
         this.output.emit(this.toUpdateBug);
@@ -138,6 +167,7 @@ export class DashboardComponent implements OnInit {
         this.issue.description = undefined;
         this.issue.priority = undefined;
         this.selectedPriorityType = this.priorityTypes[0];
+        this.assignTicketTo = undefined;
 
         $(function () {
             $('#modal-reportbug').modal('toggle');
@@ -145,6 +175,8 @@ export class DashboardComponent implements OnInit {
     }
 
     private getIssues(projectId) {
+        this.getMembers(projectId);
+
         this.http.get('Issue/Project/' + projectId)
             .subscribe(
             result => {
@@ -164,6 +196,7 @@ export class DashboardComponent implements OnInit {
 
                 if (data.length > 0) {
                     this.selectedProject = data[0];
+                    this.getMembers(this.selectedProject.Id)
                     this.getIssues(data[0].Id);
                 }
             }
@@ -186,7 +219,10 @@ export class DashboardComponent implements OnInit {
         this.http.post('Issue/Project/' + this.selectedProject.Id, {
             Title: this.issue.title,
             Description: this.issue.description,
-            PriorityId: this.selectedPriorityType.Id
+            PriorityId: this.selectedPriorityType.Id,
+            AssingTo: this.assignTicketTo.Id,
+            StartDate: $('#startDate').val(),
+            EndDate: $('#endDate').val()
         })
             .subscribe(
             result => {
@@ -220,10 +256,22 @@ export class DashboardComponent implements OnInit {
     }
 
     private openModalForUpdatingIssueObject(issue) {
-        $('#modal-updatebugticket').modal('show');
+        $( function() {
+            $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
+            $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
+            $('#updateStartDate').datepicker('setDate', new Date(issue.StartDate));
+            $('#updateEndDate').datepicker('setDate', new Date(issue.EndDate));
+            $('#modal-updatebugticket').modal('show');
+        })
         this.toUpdateBug = <any>JSON.parse(JSON.stringify(issue));
 
         this.output.emit(this.toUpdateBug);
+    }
+
+    private updateTicketAssignment(member) {
+        console.log(member)
+        this.toUpdateBug.AssignedTo = member.Name;
+        this.toUpdateBug.AssignedToId = member.Id;
     }
 
     private updatebugticket() {
@@ -231,7 +279,10 @@ export class DashboardComponent implements OnInit {
             Id: this.toUpdateBug.Id,
             Title: this.toUpdateBug.Title,
             Description: this.toUpdateBug.Description,
-            PriorityId: this.toUpdateBug.PriorityId
+            PriorityId: this.toUpdateBug.PriorityId,
+            AssingTo: this.toUpdateBug.AssignedToId,
+            StartDate: $('#updateStartDate').val(),
+            EndDate: $('#updateEndDate').val()
         })
             .subscribe(
             result => {
@@ -241,21 +292,26 @@ export class DashboardComponent implements OnInit {
             () => {
                 this.toUpdateBug = undefined;
                 $('#modal-updatebugticket').modal('hide');
+                $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
+                $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
             }
             )
     }
 
     // helper methods
-    private utcToLocalTime(timeString) {
+    private utcToLocalTime(timeString: string, format?: string) {
+        var defaultFormat = 'MM/DD/YYYY h:mm a';
         if (!timeString) return;
 
-        var utcDate = new Date(timeString.replace('T', ' ')),
-            offset = new Date().getTimezoneOffset(),
-            timeZoneDiff = offset + utcDate.getTimezoneOffset();
+        var utcDate = new Date(timeString.replace('T', ' ') + ' UTC');
 
-        var localTime = new Date(utcDate.getTime() + (timeZoneDiff * 60 * 1000));
+        var localTime = new Date(utcDate.toString());
+        
+        if (format) {
+            defaultFormat = format;
+        }
 
-        return moment(localTime).format('MM/DD/YYYY h:mm a');
+        return moment(localTime).format(defaultFormat);
     }
 
     private getIssuesHandler(data: any) {
@@ -267,6 +323,8 @@ export class DashboardComponent implements OnInit {
             issue.DateCreated = this.utcToLocalTime(issue.DateCreated);
             issue.DateClosed = this.utcToLocalTime(issue.DateClosed);
             issue.LastUpdateDate = this.utcToLocalTime(issue.LastUpdateDate);
+            issue.StartDate = this.utcToLocalTime(issue.StartDate, 'MM/DD/YYYY');
+            issue.EndDate = this.utcToLocalTime(issue.EndDate, 'MM/DD/YYYY');
             this.issues.push(issue);
         }
 
