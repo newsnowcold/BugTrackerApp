@@ -66,8 +66,6 @@ export class DashboardComponent implements OnInit {
         $( function() {
             $('#startDate').datepicker({ dateFormat: 'mm/dd/yy' });
             $('#endDate').datepicker({ dateFormat: 'mm/dd/yy' });
-            $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
-            $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
         })
     }
 
@@ -158,6 +156,7 @@ export class DashboardComponent implements OnInit {
 
     private openModalForUpdatingStatus(bugData) {
         $('#modal-updatebug').modal('show');
+
         this.toUpdateBug = <any>JSON.parse(JSON.stringify(bugData));
 
         this.output.emit(this.toUpdateBug);
@@ -258,6 +257,8 @@ export class DashboardComponent implements OnInit {
 
     private openModalForUpdatingIssueObject(issue) {
         $( function() {
+            $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
+            $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
             $('#updateStartDate').datepicker('setDate', new Date(issue.StartDate));
             $('#updateEndDate').datepicker('setDate', new Date(issue.EndDate));
             $('#modal-updatebugticket').modal('show');
@@ -268,8 +269,9 @@ export class DashboardComponent implements OnInit {
     }
 
     private updateTicketAssignment(member) {
-        this.toUpdateBug.AssingTo = member.Name;
-        this.toUpdateBug.AssingToId = member.Id;
+        console.log(member)
+        this.toUpdateBug.AssignedTo = member.Name;
+        this.toUpdateBug.AssignedToId = member.Id;
     }
 
     private updatebugticket() {
@@ -278,9 +280,9 @@ export class DashboardComponent implements OnInit {
             Title: this.toUpdateBug.Title,
             Description: this.toUpdateBug.Description,
             PriorityId: this.toUpdateBug.PriorityId,
-            AssingTo: this.assignTicketTo.Id,
-            StartDate: $('#update-startDate').val(),
-            EndDate: $('#update-endDate').val()
+            AssingTo: this.toUpdateBug.AssignedToId,
+            StartDate: $('#updateStartDate').val(),
+            EndDate: $('#updateEndDate').val()
         })
             .subscribe(
             result => {
@@ -290,8 +292,8 @@ export class DashboardComponent implements OnInit {
             () => {
                 this.toUpdateBug = undefined;
                 $('#modal-updatebugticket').modal('hide');
-                $('#update-startDate').datepicker({ dateFormat: 'mm/dd/yy' });
-                $('#update-endDate').datepicker({ dateFormat: 'mm/dd/yy' });
+                $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
+                $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
             }
             )
     }
@@ -301,11 +303,9 @@ export class DashboardComponent implements OnInit {
         var defaultFormat = 'MM/DD/YYYY h:mm a';
         if (!timeString) return;
 
-        var utcDate = new Date(timeString.replace('T', ' ')),
-            offset = new Date().getTimezoneOffset(),
-            timeZoneDiff = offset + utcDate.getTimezoneOffset();
+        var utcDate = new Date(timeString.replace('T', ' ') + ' UTC');
 
-        var localTime = new Date(utcDate.getTime() + (timeZoneDiff * 60 * 1000));
+        var localTime = new Date(utcDate.toString());
         
         if (format) {
             defaultFormat = format;
@@ -322,6 +322,7 @@ export class DashboardComponent implements OnInit {
             issue['index'] = (i + 1);
             issue.DateCreated = this.utcToLocalTime(issue.DateCreated);
             issue.DateClosed = this.utcToLocalTime(issue.DateClosed);
+            issue.LastUpdateDate = this.utcToLocalTime(issue.LastUpdateDate);
             issue.StartDate = this.utcToLocalTime(issue.StartDate, 'MM/DD/YYYY');
             issue.EndDate = this.utcToLocalTime(issue.EndDate, 'MM/DD/YYYY');
             this.issues.push(issue);

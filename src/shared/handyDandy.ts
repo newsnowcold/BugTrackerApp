@@ -5,16 +5,19 @@ declare var moment:any;
 @Injectable()
 export class HandyDandyTools {
       // helper methods
-    public utcToLocalTime(timeString) {
+    public utcToLocalTime(timeString: string, format?: string) {
+        var defaultFormat = 'MM/DD/YYYY h:mm a';
         if (!timeString) return;
 
-        var utcDate = new Date(timeString.replace('T', ' ')),
-            offset = new Date().getTimezoneOffset(),
-            timeZoneDiff = offset + utcDate.getTimezoneOffset();
-    
-        var localTime = new Date(utcDate.getTime() + (timeZoneDiff * 60 * 1000));
+        var utcDate = new Date(timeString.replace('T', ' ') + ' UTC');
 
-        return moment(localTime).format('MM/DD/YYYY h:mm a');
+        var localTime = new Date(utcDate.toString());
+        
+        if (format) {
+            defaultFormat = format;
+        }
+
+        return moment(localTime).format(defaultFormat);
     }
 
     public copyObj (obj: any) {
