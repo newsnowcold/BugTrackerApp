@@ -1,0 +1,12 @@
+#issues-container .panel .label {
+    color:black;
+    text-align: right;
+}
+
+#issues-container .descr {
+    margin-top: 30px;
+}
+
+#issues-container .descr .value {
+    padding: 15px;
+}

@@ -1,0 +1,74 @@
+<div id="issues-container">
+    <div class="panel-group" id="panel-issues">
+        <ng-container *ngFor="let bug of data; trackBy: index;">
+            <div class="panel panel-default" *ngIf="statusTypeFilter[bug.Status] && priorityTypeFilter[bug.Priority]">
+                <a data-toggle="collapse" data-parent="#panel-issues" href="#issue_{{bug.index}}">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" layout="row" layout-align="space-between center">
+                            <span>
+                                [&nbsp;{{bug.Id}}&nbsp;]&nbsp;{{bug.Title}}
+                            </span>
+                            <span (click)="openUpdateStatusModal(bug)">
+                                [&nbsp;{{bug.Status}}&nbsp;]
+                            </span>
+                        </h4>
+                    </div>
+                </a>
+                <div id="issue_{{bug.index}}" class="panel-collapse collapse in">
+                    <div class="panel-body" layout="column">
+                        <div layout-gt-sm="row" layout="column" layout-align="start center">
+                            <div layout="row" flex layout-align="start center">
+                                <label class="label" flex="33">Assigned to:</label>
+                                <div class="value">{{bug.AssignedTo}}</div>
+                            </div>
+                            <div layout="row" layout-g flex layout-align="start center">
+                                <label class="label" flex="33">Created by:</label>
+                                <div class="value">{{bug.CreatedBy}}</div>
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row" layout="column" layout-align="start center">
+                            <div layout="row" flex layout-align="start center">
+                                <label class="label" flex="33">Start date:</label>
+                                <div class="value">{{bug.StartDate}}</div>
+                            </div>
+                            <div layout="row" layout-g flex layout-align="start center">
+                                <label class="label" flex="33">Date created:</label>
+                                <div class="value">{{bug.DateCreated}}</div>
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row" layout="column" layout-align="start center">
+                            <div layout="row" flex layout-align="start center">
+                                <label class="label" flex="33">End date:</label>
+                                <div class="value">{{bug.EndDate}}</div>
+                            </div>
+                            <div layout="row" layout-g flex layout-align="start center">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row" layout="column" layout-align="start center">
+                            <div layout="row" flex layout-align="start center">
+                                <label class="label" flex="33">Updated by:</label>
+                                <div class="value">{{bug.UpdatedBy}}</div>
+                            </div>
+                            <div layout="row" layout-g flex layout-align="start center">
+                                <label class="label" flex="33">Last update:</label>
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row" layout="column" layout-align="end center">
+                            <div layout-padding>
+                                <button class="btn btn-danger" (click)="openRemoveTicketModel(bug)">Remove</button>
+                            </div>
+                            <div layout-padding>
+                                <button class="btn btn-primary" (click)="openUpdateTicketModel(bug)">Update</button>
+                            </div>
+                        </div>
+                        <div layout="column" class="descr">
+                            <label class="label" style="text-align: left;">Description:</label>
+                            <div class="value">{{bug.Description}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

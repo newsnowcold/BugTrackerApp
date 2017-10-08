@@ -5,6 +5,7 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing';
 import { KeysPipe } from '../shared/Pipes/object-keys.pipe';
+import { NestedAccordionComponent } from './nested-accordion/nested-accordion.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { KeysPipe } from '../shared/Pipes/object-keys.pipe';
   declarations: [
     DashboardComponent,
     TicketsComponent,
-    KeysPipe
+    KeysPipe,
+    NestedAccordionComponent
   ]
 })
 export class DashboardModule { }

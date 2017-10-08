@@ -58,55 +58,20 @@
                         </ul>
                     </div>
                     <button class="btn default" layout="row" layout-align="space-between" data-toggle="modal" data-target="#modal-reportbug">
-          <i class="material-icons" title="Report bug">bug_report</i>
-          Report bug
-        </button>
+                        <i class="material-icons" title="Report bug">bug_report</i>
+                        Create Ticket
+                    </button>
                 </div>
             </div>
-            <!-- Table -->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Creator</th>
-                        <th>Ticket #</th>
-                        <th>Title</th>
-                        <th>Assigned To</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Updated by</th>
-                        <th>Date created</th>
-                        <th>Last update</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let bug of issues; trackBy: index;">
-                        <tr *ngIf="statusTypeFilter[bug.Status] && priorityTypeFilter[bug.Priority]">
-                            <th>{{bug.index}}</th>
-                            <td>{{bug.CreatedBy}}</td>
-                            <td>{{bug.Id}}</td>
-                            <td>{{bug.Title}}</td>
-                            <td>{{bug.AssignedTo}}</td>
-                            <td style="background: #ccc;" class="clickable" (click)="openModalForUpdatingStatus(bug)">{{bug.Status}}</td>
-                            <td>{{bug.Priority}}</td>
-                            <td>{{bug.UpdatedBy}}</td>
-                            <td>{{bug.DateCreated}}</td>
-                            <td>{{bug.LastUpdateDate}}</td>
-                            <td>{{bug.StartDate}}</td>
-                            <td>{{bug.EndDate}}</td>
-                            <td>
-                                <div layout="row" class="muteTxt clickable">
-                                    <i class="material-icons" (click)="openModalForRemovingBug(bug)">delete</i>
-                                    <i class="material-icons" (click)="openModalForUpdatingIssueObject(bug)">mode_edit</i>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+            <app-nested-accordion 
+                *ngIf="issues" 
+                [data]="issues"
+                [statusTypeFilter]="statusTypeFilter"
+                [priorityTypeFilter]="priorityTypeFilter"
+                (updateStatus)="openModalForUpdatingStatus($event)"
+                (updateTicket)="openModalForUpdatingIssueObject($event)"
+                (removeTicket)="openModalForRemovingBug($event)">
+            </app-nested-accordion>
         </div>
     </div>
 </section>
@@ -288,14 +253,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Remove bug</h4>
+                <h4 class="modal-title">Remove ticket</h4>
             </div>
             <div class="modal-body">
                 Are you to remove bug [{{toRemoveBug.Title}}]
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="removeBug()">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="removeBug()">Remove</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

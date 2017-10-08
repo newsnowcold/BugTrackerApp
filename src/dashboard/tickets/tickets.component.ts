@@ -4,6 +4,8 @@ import { Http, Headers } from "@angular/http";
 import { UserService } from '../../shared/Services/appUserService/appUser.service';
 import { IssueStatusAndPriority } from '../../shared/Services/statusAndPriorityService/statusAndPriority.service';
 import { ProjectService } from '../../shared/Services/projectService/project.service';
+import { NestedAccordionComponent } from '../nested-accordion/nested-accordion.component';
+
 declare var $: any;
 declare var moment: any;
 
@@ -154,9 +156,9 @@ export class TicketsComponent implements OnInit {
             )
     }
 
-    private openModalForUpdatingStatus(bugData) {
+    openModalForUpdatingStatus(bugData) {
         $('#modal-updatebug').modal('show');
-
+        if (!bugData) return;
         this.toUpdateBug = <any>JSON.parse(JSON.stringify(bugData));
 
         this.output.emit(this.toUpdateBug);
@@ -233,7 +235,7 @@ export class TicketsComponent implements OnInit {
             )
     }
 
-    private openModalForRemovingBug(bug) {
+    openModalForRemovingBug(bug) {
         $('#modal-removeBug').modal('show');
         this.toRemoveBug = <any>JSON.parse(JSON.stringify(bug));
 
@@ -255,7 +257,7 @@ export class TicketsComponent implements OnInit {
             )
     }
 
-    private openModalForUpdatingIssueObject(issue) {
+    openModalForUpdatingIssueObject(issue) {
         $( function() {
             $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
             $('#updateEndDate').datepicker({ dateFormat: 'mm/dd/yy' });
