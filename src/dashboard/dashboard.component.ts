@@ -214,7 +214,7 @@ export class DashboardComponent implements OnInit {
             )
     }
 
-    private saveBug() {
+    saveBug = function() {
 
         this.http.post('Issue/Project/' + this.selectedProject.Id, {
             Title: this.issue.title,
@@ -240,7 +240,7 @@ export class DashboardComponent implements OnInit {
         this.output.emit(this.toRemoveBug);
     }
 
-    private removeBug() {
+    removeBug = function() {
         let url = 'Issue/Project/' + this.selectedProject.Id + '/';
         this.http.delete(url + this.toRemoveBug.Id, {})
             .subscribe(
