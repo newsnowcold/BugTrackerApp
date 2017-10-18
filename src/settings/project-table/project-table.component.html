@@ -40,7 +40,7 @@
             <i class="material-icons clickable" (click)="openModalToModifyMembers()">mode_edit</i>
         </div>
 
-        <div *ngFor="let member of projectMembers; trackBy: index;">
+        <div *ngFor="let member of projectMembers;">
             {{member.Name}}
         </div>
     </div>
@@ -88,7 +88,7 @@
             <div class="modal-body" *ngIf="users">
 
                 <div class="added-members">
-                    <div *ngFor="let member of newProjectMembers; trackBy: index;">
+                    <div *ngFor="let member of newProjectMembers;">
                         <div layout="row" layout-align="start center">
                             <i class="material-icons clickable" style="margin-right: 15px;" (click)="removeFromMembers(member)">block</i>
                             <span>{{member.Name}}</span>
@@ -103,7 +103,7 @@
               <span class="caret"></span>
             </button>
                         <ul class="dropdown-menu">
-                            <li *ngFor="let user of users; trackBy: index;" (click)="stateToAddMember(user)" class="clickable">
+                            <li *ngFor="let user of users;" (click)="stateToAddMember(user)" class="clickable">
                                 <a>
                   {{user.FirstName}}&nbsp;{{user.LastName}}
                 </a>

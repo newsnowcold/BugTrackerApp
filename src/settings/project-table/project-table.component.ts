@@ -19,6 +19,9 @@ export class ProjectTableComponent implements OnInit {
   users: any[];
   toAddUser: any;
   toRemoveProject: any;
+  filterString: string;
+  toEditProjectDetails: any;
+  
 
   //for creating new project
   new_projectName: string;

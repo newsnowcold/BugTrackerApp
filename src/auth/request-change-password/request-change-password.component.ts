@@ -9,6 +9,7 @@ import { Http, Headers } from "@angular/http";
 export class RequestChangePasswordComponent implements OnInit {
 
     email: string;
+    errorMsg: string;
 
     constructor(
         private http: Http

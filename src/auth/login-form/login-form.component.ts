@@ -44,6 +44,10 @@ export class LoginFormComponent implements OnInit {
     );
   }
 
+  goTo(loc: string) {
+    this.router.navigate([loc]);
+  }
+
   private handleResult(data: any) {
     this.userService.saveToken(data);
     this.router.navigate(['']);
@@ -53,10 +57,4 @@ export class LoginFormComponent implements OnInit {
     var error = err.json();
     this.errorMsg = error.error_description;
   }
-
-  private goTo(loc: string) {
-    this.router.navigate([loc]);
-  }
-
-
 }

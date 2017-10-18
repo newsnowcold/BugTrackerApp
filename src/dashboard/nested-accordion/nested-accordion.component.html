@@ -1,6 +1,6 @@
 <div id="issues-container">
     <div class="panel-group" id="panel-issues">
-        <ng-container *ngFor="let bug of data; trackBy: index;">
+        <ng-container *ngFor="let bug of data;">
             <div class="panel panel-default" *ngIf="statusTypeFilter[bug.Status] && priorityTypeFilter[bug.Priority]">
                 <a data-toggle="collapse" data-parent="#panel-issues" href="#issue_{{bug.index}}">
                     <div class="panel-heading">
