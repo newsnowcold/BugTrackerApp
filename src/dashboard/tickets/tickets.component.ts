@@ -71,90 +71,7 @@ export class TicketsComponent implements OnInit {
         })
     }
 
-    // Preparing/Calling data for static objects
-    private handleStatusTypesData = function (data) {
-        this.statusTypeFilter = {};
-
-        for (var i = 0; i < data.length; i++) {
-            this.statusTypeFilter[data[i].Status] = true;
-        }
-
-        return data;
-    }
-
-    private getStatusTypes() {
-        this.issueStatusAndPriority.getStatuses().subscribe(
-            data => {
-                this.statusTypes = this.handleStatusTypesData(data);
-            }
-        )
-    }
-
-    private selectMemberToAssign(member) {
-        this.assignTicketTo = member;
-    }
-
-    private getMembers = function (projectId) {
-        this.projectService.getProjectMembers(projectId)
-          .subscribe(
-          data => {
-            this.projectMembers = data;
-          },
-          error => {
-            console.log('error')
-          },
-          () => {
-            console.log('done')
-          })
-      }
-
-
-
-    private handlePriorityTypesData = function (data) {
-        this.priorityTypeFilter = {};
-        
-        for (var i = 0; i < data.length; i++) {
-            this.priorityTypeFilter[data[i].PriorityType1] = true;
-        }
-
-        return data;
-    }
-
-    private getPriorityTypes() {
-        this.issueStatusAndPriority.getPriorityTypes().subscribe(
-            data => {
-                this.priorityTypes = this.handlePriorityTypesData(data);
-                this.selectedPriorityType = data[0];
-            }
-        )
-    }
-
-    // Preparing/Calling data for dynamic data
-
-    private selectProject(p) {
-        this.selectedProject = p;
-        this.getIssues(this.selectedProject.Id);
-    }
-
-    private updateBugStatus() {
-        this.http.patch('Issue/Project/' + this.selectedProject.Id, {
-            IssueId: this.toUpdateBug.Id,
-            StatusId: this.toUpdateBug.StatusId,
-            ResolutionSummary: this.toUpdateBug.ResolutionSummary
-        })
-            .subscribe(
-            result => {
-                this.getIssues(this.selectedProject.Id);
-            },
-            err => console.log(err),
-            () => {
-                this.toUpdateBug = undefined;
-                $(function () {
-                    $('#modal-updatebug').modal('hide');
-                });
-            }
-            )
-    }
+    
 
     openModalForUpdatingStatus(bugData) {
         $('#modal-updatebug').modal('show');
@@ -164,59 +81,9 @@ export class TicketsComponent implements OnInit {
         this.output.emit(this.toUpdateBug);
     }
 
-    private doneAddingBug() {
-        this.issue.title = undefined;
-        this.issue.description = undefined;
-        this.issue.priority = undefined;
-        this.selectedPriorityType = this.priorityTypes[0];
-        this.assignTicketTo = undefined;
+    
 
-        $(function () {
-            $('#modal-reportbug').modal('toggle');
-        });
-    }
-
-    private getIssues(projectId) {
-        this.getMembers(projectId);
-
-        this.http.get('Issue/Project/' + projectId)
-            .subscribe(
-            result => {
-                var data = result.json();
-                this.getIssuesHandler(data);
-            },
-            err => console.log()
-            );
-    }
-
-    private getProjects() {
-        this.http.get('Project')
-            .subscribe(
-            (result: any) => {
-                var data = result.json();
-                this.projects = data;
-
-                if (data.length > 0) {
-                    this.selectedProject = data[0];
-                    this.getMembers(this.selectedProject.Id)
-                    this.getIssues(data[0].Id);
-                }
-            }
-            );
-    }
-
-    private getUsers() {
-        this.http.get('User')
-            .subscribe(
-            result => {
-                var data = result.json();
-                this.getUsersHandler(data);
-            },
-            err => console.log(err)
-            )
-    }
-
-    private saveBug() {
+    saveBug() {
 
         this.http.post('Issue/Project/' + this.selectedProject.Id, {
             Title: this.issue.title,
@@ -242,21 +109,6 @@ export class TicketsComponent implements OnInit {
         this.output.emit(this.toRemoveBug);
     }
 
-    private removeBug() {
-        let url = 'Issue/Project/' + this.selectedProject.Id + '/';
-        this.http.delete(url + this.toRemoveBug.Id, {})
-            .subscribe(
-            result => {
-                this.getIssues(this.selectedProject.Id);
-            },
-            err => { },
-            () => {
-                $('#modal-removeBug').modal('hide');
-                this.toRemoveBug = undefined;
-            }
-            )
-    }
-
     openModalForUpdatingIssueObject(issue) {
         $( function() {
             $('#updateStartDate').datepicker({ dateFormat: 'mm/dd/yy' });
@@ -274,6 +126,21 @@ export class TicketsComponent implements OnInit {
         console.log(member)
         this.toUpdateBug.AssignedTo = member.Name;
         this.toUpdateBug.AssignedToId = member.Id;
+    }
+
+    private removeBug() {
+        let url = 'Issue/Project/' + this.selectedProject.Id + '/';
+        this.http.delete(url + this.toRemoveBug.Id, {})
+            .subscribe(
+            result => {
+                this.getIssues(this.selectedProject.Id);
+            },
+            err => { },
+            () => {
+                $('#modal-removeBug').modal('hide');
+                this.toRemoveBug = undefined;
+            }
+            )
     }
 
     private updatebugticket() {
@@ -352,6 +219,144 @@ export class TicketsComponent implements OnInit {
                 IsProjectPhase: true
             }
         }
+    }
+
+    private doneAddingBug() {
+        this.issue.title = undefined;
+        this.issue.description = undefined;
+        this.issue.priority = undefined;
+        this.selectedPriorityType = this.priorityTypes[0];
+        this.assignTicketTo = undefined;
+
+        $(function () {
+            $('#modal-reportbug').modal('toggle');
+        });
+    }
+
+    private getIssues(projectId) {
+        this.getMembers(projectId);
+
+        this.http.get('Issue/Project/' + projectId)
+            .subscribe(
+            result => {
+                var data = result.json();
+                this.getIssuesHandler(data);
+            },
+            err => console.log()
+            );
+    }
+
+    private getProjects() {
+        this.http.get('Project')
+            .subscribe(
+            (result: any) => {
+                var data = result.json();
+                this.projects = data;
+
+                if (data.length > 0) {
+                    this.selectedProject = data[0];
+                    this.getMembers(this.selectedProject.Id)
+                    this.getIssues(data[0].Id);
+                }
+            }
+            );
+    }
+
+    private getUsers() {
+        this.http.get('User')
+            .subscribe(
+            result => {
+                var data = result.json();
+                this.getUsersHandler(data);
+            },
+            err => console.log(err)
+            )
+    }
+
+    // Preparing/Calling data for static objects
+    private handleStatusTypesData = function (data) {
+        this.statusTypeFilter = {};
+
+        for (var i = 0; i < data.length; i++) {
+            this.statusTypeFilter[data[i].Status] = true;
+        }
+
+        return data;
+    }
+
+    private getStatusTypes() {
+        this.issueStatusAndPriority.getStatuses().subscribe(
+            data => {
+                this.statusTypes = this.handleStatusTypesData(data);
+            }
+        )
+    }
+
+    private selectMemberToAssign(member) {
+        this.assignTicketTo = member;
+    }
+
+    private getMembers = function (projectId) {
+        this.projectService.getProjectMembers(projectId)
+          .subscribe(
+          data => {
+            this.projectMembers = data;
+          },
+          error => {
+            console.log('error')
+          },
+          () => {
+            console.log('done')
+          })
+      }
+
+
+
+    
+      private handlePriorityTypesData = function (data) {
+        this.priorityTypeFilter = {};
+        
+        for (var i = 0; i < data.length; i++) {
+            this.priorityTypeFilter[data[i].PriorityType1] = true;
+        }
+
+        return data;
+    }
+
+    private getPriorityTypes() {
+        this.issueStatusAndPriority.getPriorityTypes().subscribe(
+            data => {
+                this.priorityTypes = this.handlePriorityTypesData(data);
+                this.selectedPriorityType = data[0];
+            }
+        )
+    }
+
+    // Preparing/Calling data for dynamic data
+
+    private selectProject(p) {
+        this.selectedProject = p;
+        this.getIssues(this.selectedProject.Id);
+    }
+
+    private updateBugStatus() {
+        this.http.patch('Issue/Project/' + this.selectedProject.Id, {
+            IssueId: this.toUpdateBug.Id,
+            StatusId: this.toUpdateBug.StatusId,
+            ResolutionSummary: this.toUpdateBug.ResolutionSummary
+        })
+            .subscribe(
+            result => {
+                this.getIssues(this.selectedProject.Id);
+            },
+            err => console.log(err),
+            () => {
+                this.toUpdateBug = undefined;
+                $(function () {
+                    $('#modal-updatebug').modal('hide');
+                });
+            }
+            )
     }
 
 }
