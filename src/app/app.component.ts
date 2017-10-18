@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LoaderService } from '../shared/loader.service';
-import { UserService } from '../shared/user.service';
+import { LoaderService } from '../shared/Services/loaderService/loader.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 

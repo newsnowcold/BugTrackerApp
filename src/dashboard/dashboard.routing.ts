@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { TicketsComponent } from './tickets/tickets.component';
 import { AuthGuard } from '../shared/Services/authGuardService/auth-guard.service';
-import { SettingsComponent } from './../settings/settings.component';
+import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
-    // { 
-    //     path: '', 
-    //     component: DashboardComponent, 
-    //     pathMatch: 'full',
-    //     canActivate: [ AuthGuard ]
-    // }
+    { 
+        path: '', 
+        component: DashboardComponent, 
+        pathMatch: 'full',
+        canActivate: [ AuthGuard ]
+    }
 ]
 
 @NgModule({
@@ -18,7 +18,7 @@ const routes: Routes = [
     exports: [ RouterModule ]
 })
 
-export class MainRoutingModule {};
+export class DashboardRoutingModule {};
 
 
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { NestedAccordionComponent } from './nested-accordion.component';
 
-describe('SettingsComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('NestedAccordionComponent', () => {
+  let component: NestedAccordionComponent;
+  let fixture: ComponentFixture<NestedAccordionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [ NestedAccordionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(NestedAccordionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

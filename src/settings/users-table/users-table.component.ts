@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../shared/usersService/users.service';
-import { HandyDandyTools } from '../../shared/handyDandy';
+import { UsersService } from '../../shared/Services/usersService/users.service';
+import { HandyDandyTools } from '../../shared/Services/handyToolsService/handyDandy.service';
 
 declare var $:any;
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { UserService } from '../shared/user.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 
 @Component({
     selector: 'app-user-profile',

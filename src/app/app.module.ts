@@ -2,19 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
-import { HandyDandyTools } from '../shared/handyDandy';
+import { HandyDandyTools } from '../shared/Services/handyToolsService/handyDandy.service';
 import { Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { httpFactory } from './http.factory';
-import { AuthGuard } from '../shared/auth-guard.service';
-import { MainRoutingModule } from './app.routing';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { UserService } from '../shared/user.service';
+import { AuthGuard } from '../shared/Services/authGuardService/auth-guard.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 import { LoadersCssModule } from 'angular2-loaders-css';
-import { LoaderService } from '../shared/loader.service';
-import { IssueStatusAndPriority } from '../shared/issue-prio-status.service';
-import { ProjectService } from '../shared/projectService/project.service';
-import { UsersService } from '../shared/usersService/users.service';
+import { LoaderService } from '../shared/Services/loaderService/loader.service';
+import { IssueStatusAndPriority } from '../shared/Services/statusAndPriorityService/statusAndPriority.service';
+import { ProjectService } from '../shared/Services/projectService/project.service';
+import { UsersService } from '../shared/Services/usersService/users.service';
 
 // app modules
 
@@ -24,7 +22,11 @@ import { RegistrationModule } from '../registration/registration.module';
 import { UserProfileModule } from '../user-profile/user-profile.module';
 
 import { SettingsModule } from '../settings/settings.module';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from '../shared/Components/header/header.component';
+
+// dashboard module
+import { DashboardModule } from '../dashboard/dashboard.module';
+
 
 // Pipes
 import { KeysPipe } from '../shared/pipes/object-keys.pipe';
@@ -36,18 +38,17 @@ import { KeysPipe } from '../shared/pipes/object-keys.pipe';
     KeysPipe,
     // an array of login module components
     LoginModuleComponents,
-    DashboardComponent,
     HeaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MainRoutingModule,
     // the actual login routing module
     LoginModuleRoute,
     LoadersCssModule,
     SettingsModule,
+    DashboardModule,
     RegistrationModule,
     UserProfileModule
   ],

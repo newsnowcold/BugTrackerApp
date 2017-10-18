@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Http, Headers} from "@angular/http";
-import { UserService } from '../../shared/user.service';
+import { UserService } from '../../shared/Services/appUserService/appUser.service';
 import { Router } from '@angular/router';
 declare var $:any;
 // import { ApiService } from '../../shared/api.service';
@@ -54,7 +54,7 @@ export class LoginFormComponent implements OnInit {
     this.errorMsg = error.error_description;
   }
 
-  goTo = function(loc: string) {
+  private goTo(loc: string) {
     this.router.navigate([loc]);
   }
 

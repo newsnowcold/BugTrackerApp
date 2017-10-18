@@ -7,9 +7,9 @@ import { Injectable } from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import { environment } from "../environments/environment";
-import { LoaderService } from '../shared/loader.service';
+import { LoaderService } from '../shared/Services/loaderService/loader.service';
 import { Router } from '@angular/router';
-import { UserService } from '../shared/user.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 
 @Injectable()
 export class InterceptedHttp extends Http {

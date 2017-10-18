@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../shared/projectService/project.service';
-import { UserService } from '../shared/user.service';
+import { ProjectService } from '../shared/Services/projectService/project.service';
+import { UserService } from '../shared/Services/appUserService/appUser.service';
 import { Http } from '@angular/http';
 
 @Component({
