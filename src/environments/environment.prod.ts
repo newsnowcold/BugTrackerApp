@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  origin: 'http://medbillbugtrackerapp.azurewebsites.net/api/'
+  origin: 'http://medbillbugtrackerapp.azurewebsites.net/'
 };
