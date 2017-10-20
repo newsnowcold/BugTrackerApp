@@ -17,27 +17,27 @@
                 <div id="issue_{{bug.index}}" class="panel-collapse collapse in">
                     <div class="panel-body" layout="column">
                         <div layout-gt-sm="row" layout="column" layout-align="start center">
-                            <div layout="row" flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">Assigned to:</label>
                                 <div class="value">{{bug.AssignedTo}}</div>
                             </div>
-                            <div layout="row" layout-g flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">Created by:</label>
                                 <div class="value">{{bug.CreatedBy}}</div>
                             </div>
                         </div>
                         <div layout-gt-sm="row" layout="column" layout-align="start center">
-                            <div layout="row" flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">Start date:</label>
                                 <div class="value">{{bug.StartDate}}</div>
                             </div>
-                            <div layout="row" layout-g flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" layout-g flex layout-align="start center">
                                 <label class="label" flex="33">Date created:</label>
                                 <div class="value">{{bug.DateCreated}}</div>
                             </div>
                         </div>
                         <div layout-gt-sm="row" layout="column" layout-align="start center">
-                            <div layout="row" flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">End date:</label>
                                 <div class="value">{{bug.EndDate}}</div>
                             </div>
@@ -46,12 +46,13 @@
                             </div>
                         </div>
                         <div layout-gt-sm="row" layout="column" layout-align="start center">
-                            <div layout="row" flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">Updated by:</label>
                                 <div class="value">{{bug.UpdatedBy}}</div>
                             </div>
-                            <div layout="row" layout-g flex layout-align="start center">
+                            <div layout="column" layout-gt-sm="row" flex layout-align="start center">
                                 <label class="label" flex="33">Last update:</label>
+                                <div class="value">{{bug.LastUpdateDate}}</div>
                             </div>
                         </div>
                         <div layout-gt-sm="row" layout="column" layout-align="end center">

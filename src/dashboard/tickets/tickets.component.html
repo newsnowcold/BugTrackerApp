@@ -22,8 +22,8 @@
         </div>
         <!-- Default panel contents -->
         <div class="project-issues">
-            <div layout="row" layout-align="space-between center">
-                <h4>Project issues[{{issues.length}}]</h4>
+            <div layout-gt-sm="row" layout="column" layout-align="space-between center">
+                <h4 layout-padding>Project issues[{{issues.length}}]</h4>
                 <div layout="row">
 
                     <!-- Priority type filter -->
@@ -156,8 +156,9 @@
                 <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field dropdown" >
                     <label>Assign to</label>
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    {{ toUpdateBug.AssignedTo }}
-                    <span class="caret"></span></button>
+                        {{ toUpdateBug.AssignedTo }}
+                        <span class="caret"></span>
+                    </button>
                     <ul class="dropdown-menu">
                         <li class="bm-padding clickable" (click)="updateTicketAssignment(member)" 
                             *ngFor='let member of projectMembers; trackBy: index;'>
