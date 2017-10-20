@@ -20,17 +20,17 @@
                 <i class="material-icons clickable" (click)="editProjectDetails()">mode_edit</i>
             </div>
 
-            <div layout="row">
-                Created by: {{selectedProject.CreatedBy}}
+            <div layout="column" layout-gt-sm="row">
+                <span>Created by:</span> <span class="muteTxt">{{selectedProject.CreatedBy}}</span>
             </div>
-            <div layout="row">
-                Created Date: {{selectedProject.DateCreated}}
+            <div layout="column" layout-gt-sm="row">
+                <span>Created Date:</span> <span class="muteTxt">{{selectedProject.DateCreated}}</span>
             </div>
-            <div layout="row">
-                Modified Date: {{selectedProject.DateModified}}
+            <div layout="column" layout-gt-sm="row">
+                <span>Modified Date:</span> <span class="muteTxt">{{selectedProject.DateModified}}</span>
             </div>
-            <div layout="row">
-                Description: {{selectedProject.Description}}
+            <div layout="column">
+                <span>Description:</span> <span class="muteTxt">{{selectedProject.Description}}</span>
             </div>
         </div>
     </div>
