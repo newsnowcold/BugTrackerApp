@@ -22,3 +22,7 @@
     background-color: none;
     color:inherit;
 }
+
+.project-detail-container span {
+    font-size: 14px;
+}
