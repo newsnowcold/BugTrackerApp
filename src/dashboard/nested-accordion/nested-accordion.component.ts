@@ -20,8 +20,9 @@ export class NestedAccordionComponent implements OnInit {
   ngOnInit() {
   }
 
-  openUpdateStatusModal = function (bug) {
+  openUpdateStatusModal = function (bug, e) {
     this.updateStatus.emit(bug);
+    e.stopPropagation();
   }
 
   openUpdateTicketModel = function (bug) {

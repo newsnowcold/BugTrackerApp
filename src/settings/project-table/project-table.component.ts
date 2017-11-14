@@ -159,6 +159,11 @@ export class ProjectTableComponent implements OnInit {
   }
 
   saveNewProject = function () {
+    if(!this.new_projectName || this.new_projectName == "") {
+      alert("Project name is required.");
+      return;
+    }
+
     this.projectService.createProject({
         Name: this.new_projectName,
         Description: this.new_projectDescription
@@ -210,6 +215,11 @@ export class ProjectTableComponent implements OnInit {
   }
 
   updateProjectDetails = function () {
+    if(this.toEditProjectDetails.Name == "") {
+      alert("Project name is required.");
+      return;
+    }
+
     var obj = {
         Name: this.toEditProjectDetails.Name,
         Description: this.toEditProjectDetails.Description

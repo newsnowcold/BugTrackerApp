@@ -4,14 +4,14 @@
             <div class="panel panel-default" *ngIf="statusTypeFilter[bug.Status] && priorityTypeFilter[bug.Priority]">
                 <a data-toggle="collapse" data-parent="#panel-issues" href="#issue_{{bug.index}}">
                     <div class="panel-heading">
-                        <h4 class="panel-title" layout="row" layout-align="space-between center">
-                            <span>
+                        <div class="panel-title" layout="row" layout-align="space-between center">
+                            <div>
                                 [&nbsp;{{bug.Id}}&nbsp;]&nbsp;{{bug.Title}}
-                            </span>
-                            <span (click)="openUpdateStatusModal(bug)">
+                            </div>
+                            <div (click)="openUpdateStatusModal(bug, $event)">
                                 [&nbsp;{{bug.Status}}&nbsp;]
-                            </span>
-                        </h4>
+                            </div>
+                        </div>
                     </div>
                 </a>
                 <div id="issue_{{bug.index}}" class="panel-collapse collapse in">
