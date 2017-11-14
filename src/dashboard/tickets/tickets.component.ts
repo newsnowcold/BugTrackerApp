@@ -82,8 +82,14 @@ export class TicketsComponent implements OnInit {
     }
 
     
-
     saveBug() {
+
+        var errorMsg = this.validateCreationOfTicket();
+
+        if (errorMsg != "") {
+            alert(errorMsg);
+            return;
+        }
 
         this.http.post('Issue/Project/' + this.selectedProject.Id, {
             Title: this.issue.title,
@@ -122,8 +128,28 @@ export class TicketsComponent implements OnInit {
         this.output.emit(this.toUpdateBug);
     }
 
+    private validateCreationOfTicket() {
+        var errorMsg = "";
+        console.log(this.issue)
+        if (!this.issue || this.issue.title == undefined) {
+            errorMsg += "\nTicket name is required";
+        }
+
+        if (!this.selectedPriorityType || this.selectedPriorityType.Id == undefined) {
+            errorMsg += "\nTicket priority type is required.";
+        }
+
+        if (!this.assignTicketTo || this.assignTicketTo.Id == undefined) {
+            errorMsg += "\nTicket assignment is required.";
+        }
+
+        if ($('#startDate').val() == "" || $('#startDate').val() == "") {
+            errorMsg += "\nCheck start and end date of ticket.";
+        }
+        return errorMsg;
+    }
+
     private updateTicketAssignment(member) {
-        console.log(member)
         this.toUpdateBug.AssignedTo = member.Name;
         this.toUpdateBug.AssignedToId = member.Id;
     }
