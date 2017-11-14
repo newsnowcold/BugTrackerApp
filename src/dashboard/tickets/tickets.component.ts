@@ -130,7 +130,7 @@ export class TicketsComponent implements OnInit {
 
     private validateCreationOfTicket() {
         var errorMsg = "";
-        console.log(this.issue)
+
         if (!this.issue || this.issue.title == undefined) {
             errorMsg += "\nTicket name is required";
         }

@@ -3,8 +3,8 @@
 @import 'assets/css/mobilereset.css';
 @import 'assets/css/webreset.css';
 @import 'assets/css/responsive.css';
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import 'assets/css/loaders.css';
+
 
 a {
     font-weight: 400;
