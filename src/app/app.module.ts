@@ -13,7 +13,7 @@ import { LoaderService } from '../shared/Services/loaderService/loader.service';
 import { IssueStatusAndPriority } from '../shared/Services/statusAndPriorityService/statusAndPriority.service';
 import { ProjectService } from '../shared/Services/projectService/project.service';
 import { UsersService } from '../shared/Services/usersService/users.service';
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // app modules
 
 // login
@@ -54,6 +54,7 @@ import { KeysPipe } from '../shared/pipes/object-keys.pipe';
   ],
   bootstrap: [ AppComponent ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     AuthGuard,
     UserService,
     LoaderService,

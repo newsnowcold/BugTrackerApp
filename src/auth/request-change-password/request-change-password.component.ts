@@ -22,8 +22,8 @@ export class RequestChangePasswordComponent implements OnInit {
     sendForgotPassword = function () {
         var url = "Account/RequestResetPassword";
         var redirectUrl = window.location.protocol + '//' + window.location.host;
-        url += "?redirectUrl= " + redirectUrl + "/set-new-password";
-
+        url += "?redirectUrl= " + redirectUrl + "/%23/set-new-password";
+        url = 
         this.http.post(url, { Email: this.email })
             .subscribe(
             result => {
