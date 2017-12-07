@@ -21,7 +21,10 @@
                     <td>{{user.FirstName}}</td>
                     <td>{{user.LastName}}</td>
                     <td>{{user.Email}}</td>
-                    <td>{{user.Role}}</td>
+                    <td class="clickable" (click)="planToUpdateTole(user)">
+                        <i class="material-icons" style="font-size: 14px;">mode_edit</i> 
+                        {{user.Role}}
+                    </td>
                     <td>{{user.JoinedDate}}</td>
                     <td>{{(user.EmailConfirmed) ? 'Yes': 'No'}}</td>
                     <td class="clickable muteTxt" (click)="planToRemoveUser(user)">
@@ -77,3 +80,38 @@
         </div>
     </div>
 </div>
+
+
+<div id="modal-upateUserRole" class="modal fade" role="dialog">
+        <div class="modal-dialog" *ngIf="toUpdateUserRole">
+    
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change user role of {{toUpdateUserRole.FirstName}} {{toUpdateUserRole.LastName}}</h4>
+                </div>
+                <div class="modal-body">
+                        <div flex>
+                            <div>
+                                <span>From:</span>
+                                {{toUpdateUserRole.Role}}
+                            </div>
+                            <div>
+                                <span>To:</span>
+                                <select [(ngModel)]="newRole">
+                                    <option [ngValue]="role" *ngFor="let role of roles; trackBy: index;">
+                                    {{role}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="updateRole()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

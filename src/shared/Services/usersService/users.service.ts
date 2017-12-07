@@ -12,8 +12,8 @@ export class UsersService {
     constructor(private http: Http) {
     }
     
-    getUsers() : Observable<any> {
-        return this.http.get("User")
+    getRoles() : Observable<any> {
+        return this.http.get("UserRole")
                         .map((res) => this.extractData(res))
                         .catch((error) => Observable.throw(error.json.error || 'Server error'));
     }
@@ -28,6 +28,21 @@ export class UsersService {
                         .map((res) => this.extractData(res))
                         .catch((error) => Observable.throw(error.json.error || 'Server error'));
                         
+    }
+
+    updateUserRole(newRole: string, userId: number): Observable<any> {
+        var url = "UserRole/" + userId;
+
+        return this.http.patch(url, { UserRole: newRole })
+                        .map((res) => this.extractData(res))
+                        .catch((error) => Observable.throw(error.json.error || 'Server error'));
+                        
+    }
+
+    getUsers() : Observable<any> {
+        return this.http.get("User")
+                        .map((res) => this.extractData(res))
+                        .catch((error) => Observable.throw(error.json.error || 'Server error'));
     }
 
     removeUser(userId:number) : Observable<any> {

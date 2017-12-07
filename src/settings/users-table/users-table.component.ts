@@ -13,12 +13,50 @@ export class UsersTableComponent implements OnInit {
   users: any;
   inviteEmail: string;
   toRemoveUser: any;
+  toUpdateUserRole: any;
+  roles: string[];
+  newRole: string;
 
   constructor(private userService: UsersService,
               private handyDandyTools: HandyDandyTools) { }
 
   ngOnInit() {
     this.getUsersData();
+    this.getRoles();
+  }
+
+  getRoles = function () {
+    this.userService.getRoles()
+      .subscribe(
+        data => {
+          this.roles = data;
+        },
+        err => {
+          console.log(err)
+        },
+        () => {
+          console.log('done')
+        }
+      )
+  }
+
+
+  updateRole = function () {
+    this.userService.updateUserRole(this.newRole, this.toUpdateUserRole.UserId)
+    .subscribe(
+      data => {
+        $("#modal-upateUserRole").modal('hide');
+        alert("User role updated!");
+        this.getUsersData();
+      },
+      err => {
+        alert(err);
+      },
+      () => {
+        this.newRole = undefined;
+        this.toUpdateUserRole = undefined;
+      }
+    )
   }
 
   getUsersData = function () {
@@ -56,6 +94,11 @@ export class UsersTableComponent implements OnInit {
   planToRemoveUser = function (user) {
     this.toRemoveUser = user;
     $("#modal-removeUser").modal('show');
+  }
+
+  planToUpdateTole = function (user) {
+    this.toUpdateUserRole = user;
+    $("#modal-upateUserRole").modal('show');
   }
 
   removeUser = function () {
