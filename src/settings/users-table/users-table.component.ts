@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../shared/Services/usersService/users.service';
 import { HandyDandyTools } from '../../shared/Services/handyToolsService/handyDandy.service';
+import { UserService } from '../../shared/Services/appUserService/appUser.service'
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-user-settings-table',
@@ -16,34 +17,38 @@ export class UsersTableComponent implements OnInit {
   toUpdateUserRole: any;
   roles: string[];
   newRole: string;
+  CurrentuserId: number;
 
   constructor(private userService: UsersService,
-              private handyDandyTools: HandyDandyTools) { }
+    private handyDandyTools: HandyDandyTools,
+    private userLoggedIn: UserService) { }
 
   ngOnInit() {
     this.getUsersData();
     this.getRoles();
+
+    this.CurrentuserId = this.userLoggedIn.getUserId();
   }
 
   getRoles = function () {
     this.userService.getRoles()
       .subscribe(
-        data => {
-          this.roles = data;
-        },
-        err => {
-          console.log(err)
-        },
-        () => {
-          console.log('done')
-        }
+      data => {
+        this.roles = data;
+      },
+      err => {
+        console.log(err)
+      },
+      () => {
+        console.log('done')
+      }
       )
   }
 
 
   updateRole = function () {
     this.userService.updateUserRole(this.newRole, this.toUpdateUserRole.UserId)
-    .subscribe(
+      .subscribe(
       data => {
         $("#modal-upateUserRole").modal('hide');
         alert("User role updated!");
@@ -56,38 +61,39 @@ export class UsersTableComponent implements OnInit {
         this.newRole = undefined;
         this.toUpdateUserRole = undefined;
       }
-    )
+      )
   }
 
   getUsersData = function () {
     this.userService.getUsers()
       .subscribe(
-        data => {
-          this.processProjectList(data);
-        },
-        err => {
-          console.log(err)
-        },
-        () => {
-          console.log('done')
-        }
+      data => {
+        this.processProjectList(data);
+      },
+      err => {
+        console.log(err)
+      },
+      () => {
+        console.log('done')
+      }
       )
   }
 
   inviteUsers = function () {
     this.userService.InviteUser(this.inviteEmail)
       .subscribe(
-        data => {;
-          this.getUsersData();
-          this.inviteEmail = undefined;
-        },
-        err => {
-          this.inviteEmail = undefined;
-        },
-        () => {
-          $('#modal-inviteUser').modal('hide');
-          this.inviteEmail = undefined;
-        }
+      data => {
+        ;
+        this.getUsersData();
+        this.inviteEmail = undefined;
+      },
+      err => {
+        this.inviteEmail = undefined;
+      },
+      () => {
+        $('#modal-inviteUser').modal('hide');
+        this.inviteEmail = undefined;
+      }
       )
   }
 
@@ -104,26 +110,28 @@ export class UsersTableComponent implements OnInit {
   removeUser = function () {
     this.userService.removeUser(this.toRemoveUser.UserId)
       .subscribe(
-        data => {;
-          this.getUsersData();
-          this.toRemoveUser = undefined;
-        },
-        err => {
-          $("#modal-removeUser").modal('hide');
-          this.toRemoveUser = undefined;
-        },
-        () => {
-          $("#modal-removeUser").modal('hide');
-          this.toRemoveUser = undefined;
-        }
+      data => {
+        ;
+        this.getUsersData();
+        this.toRemoveUser = undefined;
+      },
+      err => {
+        $("#modal-removeUser").modal('hide');
+        this.toRemoveUser = undefined;
+      },
+      () => {
+        $("#modal-removeUser").modal('hide');
+        this.toRemoveUser = undefined;
+      }
       )
   }
 
+  
   // HELPER FUNCTION/METHODS
   private processProjectList(data) {
     this.users = [];
 
-    for (var i = 0; i < data.length; i++) {      
+    for (var i = 0; i < data.length; i++) {
       var user = data[i];
       user['index'] = (i + 1);
       user.JoinedDate = this.handyDandyTools.utcToLocalTime(user.JoinedDate);
