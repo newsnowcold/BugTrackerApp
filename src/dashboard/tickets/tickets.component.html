@@ -88,27 +88,37 @@
             </div>
             <div class="modal-body">
                 <span *ngIf="!projectMembers">Loading project members...</span>
-                <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field dropdown" >
+                <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field" >
                     <label>Assign to</label>
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    {{ assignTicketTo ? assignTicketTo.Name : "" }}
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li class="bm-padding clickable" (click)="selectMemberToAssign(member)" 
-                            *ngFor='let member of projectMembers; trackBy: index;'>
-                            <span>{{member.Name}}</span>
-                        </li>
-                    </ul>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            {{ assignTicketTo ? assignTicketTo.Name : "" }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="bm-padding clickable" (click)="selectMemberToAssign(member)" 
+                                *ngFor='let member of projectMembers; trackBy: index;'>
+                                <span>{{member.Name}}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <span *ngIf="!priorityTypes">Loading priority levels...</span>
                 <div layout="row" *ngIf="priorityTypes" class="project-field bugPriority" layout-align="start center">
                     <label>Select bug priority level</label>
-                    <select [(ngModel)]="selectedPriorityType.Id">
-                        <option [ngValue]="prioType.Id" *ngFor="let prioType of priorityTypes; trackBy: index;">
-                        {{prioType.PriorityType1}}
-                        </option>
-                    </select>
+                    <div class="dropdown">
+                        <button id="dropdownpriorityTypes" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            {{ selectedPriorityType ? selectedPriorityType.PriorityType1 : "" }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownpriorityTypes">
+                            <li class="bm-padding clickable" (click)="selectedPriorityType = prioType" 
+                                *ngFor='let prioType of priorityTypes; trackBy: index;'>
+                                <span>{{prioType.PriorityType1}}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!--project title-->
