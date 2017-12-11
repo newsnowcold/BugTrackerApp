@@ -28,6 +28,7 @@
     padding: 10px;
 }
 
+.bugPriority > label,
 .assignment > label {
     margin-right: 5px;
 }
