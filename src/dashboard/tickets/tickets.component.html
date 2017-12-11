@@ -87,6 +87,7 @@
                 <h4 class="modal-title">Report Ticket</h4>
             </div>
             <div class="modal-body">
+                <span *ngIf="!projectMembers">Loading project members...</span>
                 <div layout="row" layout-align="start center" *ngIf="projectMembers" class="assignment project-field dropdown" >
                     <label>Assign to</label>
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
@@ -100,6 +101,7 @@
                     </ul>
                 </div>
 
+                <span *ngIf="!priorityTypes">Loading priority levels...</span>
                 <div layout="row" *ngIf="priorityTypes" class="project-field bugPriority" layout-align="start center">
                     <label>Select bug priority level</label>
                     <select [(ngModel)]="selectedPriorityType.Id">
