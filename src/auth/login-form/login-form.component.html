@@ -1,16 +1,23 @@
-<div class="login-module-wrapper"
-  layout="row" layout-align="center">
-  
-  <form flex class="login-form"
-      layout="column" layout-align="start">
-      <h2 class="f-header">Login</h2>
-      <span style="font-size: 12px; color: #c71d1d;">{{errorMsg}}</span>
-      <input type="text" [(ngModel)]="username" name="username" class="form-control" placeholder="Username">
-      <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password">
-      <input type="submit" value="Login" (click)="login()">
-      <span class="clickable" style="font-size: 14px; color: #7d7d88;"
-        (click)="goTo('/forgot-password')">
+<div class="login-module-wrapper" layout="row" layout-align="center">
+
+  <form class="login-form" name="form" layout="column" layout-align="start" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm" flex novalidate>
+    <h2 class="f-header">Login</h2>
+    <div *ngIf="errorMsg" class="alert alert-danger">{{errorMsg}}</div>
+    <div class="form-group">
+      <input type="text" [(ngModel)]="model.username" name="username" class="form-control" placeholder="Username" #username="ngModel" required>
+      <div *ngIf="loginForm.submitted && !username.valid" class="help-block">Username is required</div>
+    </div>
+    <div class="form-group">
+      <input type="password" [(ngModel)]="model.password" name="password" class="form-control" placeholder="Password" #password="ngModel" required>
+      <div *ngIf="loginForm.submitted && !password.valid" class="help-block">Password is required</div>
+    </div>
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Login</button>
+    </div>
+    <div class="form-group">
+      <span class="clickable" style="font-size: 14px; color: #7d7d88;" (click)="goTo('/forgot-password')">
         Forgot password
       </span>
+    </div>
   </form>
-</div>
+</div>  
