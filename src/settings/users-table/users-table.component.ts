@@ -83,9 +83,9 @@ export class UsersTableComponent implements OnInit {
     this.userService.InviteUser(this.inviteEmail)
       .subscribe(
       data => {
-        ;
         this.getUsersData();
         this.inviteEmail = undefined;
+        alert('Invitation successfully sent.')
       },
       err => {
         this.inviteEmail = undefined;
