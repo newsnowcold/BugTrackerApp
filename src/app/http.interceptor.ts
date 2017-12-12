@@ -114,7 +114,14 @@ export class InterceptedHttp extends Http {
 
             for (var i = 0; i < errData.Errors.length; i++) {
                 var error = errData.Errors[i];
-                msg += error.Reason + "\n";
+
+                var modelProp = error.Reason.substring(error.Reason.indexOf("["), error.Reason.indexOf("]") + 1),
+                    extraString = "-";
+
+                error.Reason = error.Reason.replace(modelProp, '')
+                            .replace(extraString, '');
+
+                msg += error.Reason.trim() + "\n";
             }
 
             alert(msg);
