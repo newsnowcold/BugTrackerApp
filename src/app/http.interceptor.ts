@@ -110,7 +110,7 @@ export class InterceptedHttp extends Http {
             alert("Error id: " + errData.Id + "\n" + errData.Message)
         } else if (errData.Code == 400) {
             var msg = errData.Message;
-            msg += "See list of errors below:\n\n";
+            msg += " See list of errors below:\n\n";
 
             for (var i = 0; i < errData.Errors.length; i++) {
                 var error = errData.Errors[i];
