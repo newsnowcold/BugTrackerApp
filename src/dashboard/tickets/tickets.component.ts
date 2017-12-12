@@ -131,7 +131,7 @@ export class TicketsComponent implements OnInit {
     private validateCreationOfTicket() {
         var errorMsg = "";
 
-        if (!this.issue || this.issue.title == undefined) {
+        if (!this.issue || this.issue.title == undefined || this.issue.title == '') {
             errorMsg += "\nTicket name is required";
         }
 
@@ -143,8 +143,18 @@ export class TicketsComponent implements OnInit {
             errorMsg += "\nTicket assignment is required.";
         }
 
-        if ($('#startDate').val() == "" || $('#startDate').val() == "") {
+        if ($('#startDate').val() == "" || $('#endDate').val() == "") {
             errorMsg += "\nCheck start and end date of ticket.";
+            console.log('Invalid dates');
+        }
+
+        var startDate = new Date($('#startDate').val());
+        var endDate = new Date($('#endDate').val());
+
+        console.log('startdate: ' + startDate + '| enddate: ' + endDate);
+
+        if(endDate < startDate) {
+            errorMsg += '\nEnd must not be earlier that stardate.';
         }
         return errorMsg;
     }
